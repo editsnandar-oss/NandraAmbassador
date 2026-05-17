@@ -7,14 +7,14 @@
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+JP:wght@300;400;700&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --pink: #FF4B8B;
-    --blue: #00C6FF;
-    --dark: #0A0A14;
-    --darker: #060610;
-    --card: #12121F;
-    --border: rgba(255,75,139,0.25);
-    --text: #E8E8F5;
-    --muted: #8888AA;
+    --accent: #00C6FF;
+    --accent2: #0077FF;
+    --darker: #050810;
+    --dark: #080D18;
+    --card: #0C1220;
+    --border: rgba(0,198,255,0.22);
+    --text: #E0EFFF;
+    --muted: #5577AA;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   html { scroll-behavior: smooth; }
@@ -33,6 +33,90 @@
     z-index: 9999;
     opacity: .4;
   }
+
+  /* ── SEARCH BAR ── */
+  .search-wrap {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 10000;
+    background: rgba(5,8,16,.85);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(0,198,255,.15);
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .search-icon { font-size: 1.1rem; color: var(--accent); flex-shrink: 0; }
+  .search-input {
+    flex: 1;
+    background: rgba(0,198,255,.07);
+    border: 1px solid rgba(0,198,255,.25);
+    border-radius: 8px;
+    padding: 9px 16px;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: .95rem;
+    font-weight: 600;
+    color: var(--text);
+    outline: none;
+    transition: border-color .2s, box-shadow .2s;
+    letter-spacing: .03em;
+  }
+  .search-input::placeholder { color: var(--muted); }
+  .search-input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(0,198,255,.12); }
+  .search-clear {
+    background: none;
+    border: none;
+    color: var(--muted);
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: 6px;
+    transition: color .2s, background .2s;
+    display: none;
+  }
+  .search-clear.visible { display: block; }
+  .search-clear:hover { color: var(--text); background: rgba(255,255,255,.07); }
+  .search-results-count {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: .78rem;
+    font-weight: 700;
+    letter-spacing: .08em;
+    color: var(--accent);
+    white-space: nowrap;
+    display: none;
+  }
+  .search-results-count.visible { display: block; }
+
+  /* highlight matched text */
+  mark {
+    background: rgba(0,198,255,.3);
+    color: #fff;
+    border-radius: 3px;
+    padding: 0 2px;
+  }
+
+  /* hide non-matching searchable items */
+  [data-searchable].search-hidden {
+    display: none !important;
+  }
+
+  /* no results message */
+  .no-results {
+    display: none;
+    text-align: center;
+    padding: 40px 24px;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 1rem;
+    color: var(--muted);
+    letter-spacing: .05em;
+  }
+  .no-results.visible { display: block; }
+
+  /* push content below fixed search bar */
+  body { padding-top: 60px; }
+
+  /* ── HERO ── */
   .hero {
     min-height: 100vh;
     display: flex;
@@ -49,29 +133,29 @@
     position: absolute;
     inset: 0;
     background:
-      radial-gradient(ellipse 80% 60% at 50% 0%, rgba(255,75,139,.18) 0%, transparent 70%),
-      radial-gradient(ellipse 60% 40% at 80% 100%, rgba(0,198,255,.12) 0%, transparent 60%);
+      radial-gradient(ellipse 80% 60% at 50% 0%, rgba(0,198,255,.15) 0%, transparent 70%),
+      radial-gradient(ellipse 60% 40% at 80% 100%, rgba(0,119,255,.12) 0%, transparent 60%);
     pointer-events: none;
   }
   .badge {
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    background: rgba(255,75,139,.12);
-    border: 1px solid var(--border);
+    background: rgba(0,198,255,.1);
+    border: 1px solid rgba(0,198,255,.3);
     border-radius: 999px;
     padding: 6px 18px;
     font-family: 'Rajdhani', sans-serif;
     font-size: .8rem;
     letter-spacing: .12em;
     text-transform: uppercase;
-    color: var(--pink);
+    color: var(--accent);
     margin-bottom: 28px;
     animation: fadeDown .8s ease both;
   }
   .badge-dot {
     width: 7px; height: 7px;
-    background: var(--pink);
+    background: var(--accent);
     border-radius: 50%;
     animation: pulse 1.6s ease-in-out infinite;
   }
@@ -83,8 +167,8 @@
     letter-spacing: .02em;
     animation: fadeDown .9s .1s ease both;
   }
-  .hero h1 .name { color: var(--pink); }
-  .hero h1 .glow { text-shadow: 0 0 40px rgba(255,75,139,.5); }
+  .hero h1 .name { color: var(--accent); }
+  .hero h1 .glow { text-shadow: 0 0 40px rgba(0,198,255,.5); }
   .hero-sub {
     font-family: 'Rajdhani', sans-serif;
     font-size: clamp(1rem, 2.5vw, 1.3rem);
@@ -93,12 +177,12 @@
     letter-spacing: .05em;
     animation: fadeDown 1s .2s ease both;
   }
-  .hero-sub span { color: var(--blue); }
+  .hero-sub span { color: var(--accent2); }
   .hero-desc {
     max-width: 560px;
     font-size: .95rem;
     line-height: 1.8;
-    color: #AAAAC0;
+    color: #7799BB;
     margin-top: 24px;
     animation: fadeDown 1s .3s ease both;
   }
@@ -126,14 +210,14 @@
     border: none;
   }
   .btn-primary {
-    background: linear-gradient(135deg, var(--pink), #C0306A);
+    background: linear-gradient(135deg, #0077FF, #0055CC);
     color: #fff;
-    box-shadow: 0 4px 24px rgba(255,75,139,.35);
+    box-shadow: 0 4px 24px rgba(0,119,255,.4);
   }
-  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(255,75,139,.5); }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(0,119,255,.6); }
   .btn-outline {
     background: transparent;
-    color: var(--blue);
+    color: var(--accent);
     border: 1.5px solid rgba(0,198,255,.4);
   }
   .btn-outline:hover { background: rgba(0,198,255,.08); transform: translateY(-2px); }
@@ -151,7 +235,7 @@
   }
   .scroll-line {
     width: 1px; height: 50px;
-    background: linear-gradient(to bottom, var(--pink), transparent);
+    background: linear-gradient(to bottom, var(--accent), transparent);
     animation: scrollLine 2s ease-in-out infinite;
   }
   @keyframes scrollLine { 0%,100%{opacity:.2} 50%{opacity:1} }
@@ -161,7 +245,7 @@
     font-size: .75rem;
     letter-spacing: .18em;
     text-transform: uppercase;
-    color: var(--pink);
+    color: var(--accent);
     margin-bottom: 12px;
   }
   .section-title {
@@ -185,13 +269,13 @@
     overflow: hidden;
     transition: transform .25s, border-color .25s;
   }
-  .bcard:hover { transform: translateY(-4px); border-color: rgba(255,75,139,.5); }
+  .bcard:hover { transform: translateY(-4px); border-color: rgba(0,198,255,.6); }
   .bcard::before {
     content: '';
     position: absolute;
     top: 0; left: 0; right: 0;
     height: 2px;
-    background: linear-gradient(90deg, var(--pink), var(--blue));
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
   }
   .bcard-icon { font-size: 2rem; margin-bottom: 14px; }
   .bcard h3 {
@@ -214,7 +298,7 @@
     align-items: flex-start;
     gap: 14px;
     background: var(--card);
-    border: 1px solid rgba(255,255,255,.06);
+    border: 1px solid rgba(0,198,255,.08);
     border-radius: 10px;
     padding: 16px 20px;
     font-size: .92rem;
@@ -223,7 +307,7 @@
   .req-list li .icon {
     width: 32px; height: 32px;
     border-radius: 8px;
-    background: rgba(255,75,139,.15);
+    background: rgba(0,198,255,.12);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -238,13 +322,13 @@
   }
   .cat-card {
     background: var(--card);
-    border: 1px solid rgba(255,255,255,.07);
+    border: 1px solid rgba(0,198,255,.1);
     border-radius: 12px;
     padding: 24px 20px;
     text-align: center;
     transition: transform .2s, border-color .2s;
   }
-  .cat-card:hover { transform: translateY(-4px); border-color: var(--blue); }
+  .cat-card:hover { transform: translateY(-4px); border-color: var(--accent); }
   .cat-card .emoji { font-size: 2.2rem; display: block; margin-bottom: 10px; }
   .cat-card h4 {
     font-family: 'Rajdhani', sans-serif;
@@ -261,7 +345,7 @@
     align-items: center;
     gap: 6px;
     font-size: .72rem;
-    color: var(--blue);
+    color: var(--accent);
     text-decoration: none;
     background: rgba(0,198,255,.08);
     border: 1px solid rgba(0,198,255,.2);
@@ -282,18 +366,18 @@
     border-radius: 14px;
     padding: 32px 24px;
     text-align: center;
-    border: 1px solid rgba(255,255,255,.07);
+    border: 1px solid rgba(0,198,255,.08);
   }
   .reward-card.highlight {
-    border-color: rgba(255,75,139,.4);
-    background: linear-gradient(135deg, #1A0F18, #120D1E);
+    border-color: rgba(0,198,255,.35);
+    background: linear-gradient(135deg, #080F1E, #060D1A);
   }
   .reward-card .amount {
     font-family: 'Bebas Neue', sans-serif;
     font-size: 2.8rem;
     line-height: 1;
     margin-bottom: 8px;
-    background: linear-gradient(135deg, var(--pink), var(--blue));
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -308,20 +392,20 @@
   }
   .reward-card p { font-size: .85rem; color: var(--muted); line-height: 1.7; }
   .warning-box {
-    background: rgba(255,75,139,.06);
-    border: 1px solid rgba(255,75,139,.3);
-    border-left: 4px solid var(--pink);
+    background: rgba(0,198,255,.05);
+    border: 1px solid rgba(0,198,255,.25);
+    border-left: 4px solid var(--accent);
     border-radius: 10px;
     padding: 20px 24px;
     margin: 32px 0;
     font-size: .9rem;
     line-height: 1.7;
-    color: #CCCCDD;
+    color: #AABBCC;
   }
-  .warning-box strong { color: var(--pink); }
+  .warning-box strong { color: var(--accent); }
   .contact-section {
-    background: linear-gradient(135deg, #10101C, #180D1C);
-    border-top: 1px solid rgba(255,75,139,.15);
+    background: linear-gradient(135deg, #060C18, #080E1C);
+    border-top: 1px solid rgba(0,198,255,.15);
     text-align: center;
     padding: 80px 24px;
   }
@@ -340,7 +424,7 @@
   }
   .contact-card {
     background: var(--card);
-    border: 1px solid rgba(255,255,255,.08);
+    border: 1px solid rgba(0,198,255,.15);
     border-radius: 12px;
     padding: 18px 28px;
     display: flex;
@@ -354,11 +438,11 @@
     letter-spacing: .04em;
     transition: border-color .2s, transform .2s;
   }
-  .contact-card:hover { border-color: var(--pink); transform: translateY(-3px); }
+  .contact-card:hover { border-color: var(--accent); transform: translateY(-3px); }
   .contact-card .icon-c { font-size: 1.4rem; }
   .divider {
     height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(255,75,139,.3), transparent);
+    background: linear-gradient(90deg, transparent, rgba(0,198,255,.25), transparent);
     margin: 0 24px;
   }
   footer {
@@ -387,13 +471,13 @@
   }
   .shape-1 {
     width: 400px; height: 400px;
-    background: rgba(255,75,139,.08);
+    background: rgba(0,198,255,.07);
     top: -100px; left: -100px;
     animation: float 8s ease-in-out infinite;
   }
   .shape-2 {
     width: 300px; height: 300px;
-    background: rgba(0,198,255,.07);
+    background: rgba(0,119,255,.06);
     bottom: -50px; right: -80px;
     animation: float 10s ease-in-out infinite reverse;
   }
@@ -405,6 +489,13 @@
 </style>
 </head>
 <body>
+
+<div class="search-wrap">
+  <span class="search-icon">&#128269;</span>
+  <input class="search-input" id="searchInput" type="text" placeholder="Cari informasi... (contoh: reward, syarat, drawing, AMV)" autocomplete="off">
+  <button class="search-clear" id="searchClear" onclick="clearSearch()">&#10005;</button>
+  <span class="search-results-count" id="searchCount"></span>
+</div>
 
 <div class="hero">
   <div class="shape shape-1"></div>
@@ -445,32 +536,32 @@
   <p class="section-label">&#10024; Keuntungan</p>
   <h2 class="section-title">Kenapa Jadi Kreator Bstation?</h2>
   <div class="benefits">
-    <div class="bcard">
+    <div class="bcard" data-searchable>
       <div class="bcard-icon">&#128176;</div>
       <h3>Komisi Bulanan</h3>
-      <p>Dapatkan reward MAC (bulanan) mulai dari <strong style="color:var(--pink)">Rp 20.000 &ndash; Rp 300.000</strong> dari konsistensi kontenmu.</p>
+      <p>Dapatkan reward MAC (bulanan) mulai dari <strong style="color:var(--accent)">Rp 20.000 &ndash; Rp 300.000</strong> dari konsistensi kontenmu.</p>
     </div>
-    <div class="bcard">
+    <div class="bcard" data-searchable>
       <div class="bcard-icon">&#127912;</div>
       <h3>Konten Original Kamu</h3>
-      <p>Upload konten sesuai skill-mu. Hak kepemilikan konten <strong style="color:var(--blue)">tetap 100% milik kreator</strong>.</p>
+      <p>Upload konten sesuai skill-mu. Hak kepemilikan konten <strong style="color:var(--accent2)">tetap 100% milik kreator</strong>.</p>
     </div>
-    <div class="bcard">
+    <div class="bcard" data-searchable>
       <div class="bcard-icon">&#127942;</div>
       <h3>Weekly Reward</h3>
-      <p>Menang kompetisi mingguan dan raih bonus hingga <strong style="color:var(--pink)">Rp 50.000</strong> untuk konten video.</p>
+      <p>Menang kompetisi mingguan dan raih bonus hingga <strong style="color:var(--accent)">Rp 50.000</strong> untuk konten video.</p>
     </div>
-    <div class="bcard">
+    <div class="bcard" data-searchable>
       <div class="bcard-icon">&#127881;</div>
       <h3>Event Eksklusif</h3>
       <p>Bstation rutin mengadakan event khusus kreator untuk melipatgandakan reward kamu!</p>
     </div>
-    <div class="bcard">
+    <div class="bcard" data-searchable>
       <div class="bcard-icon">&#127358;</div>
       <h3>Bimbingan 100% Gratis</h3>
-      <p>Seluruh proses pendaftaran dan bimbingan dari admin <strong style="color:var(--blue)">tanpa biaya apapun</strong>.</p>
+      <p>Seluruh proses pendaftaran dan bimbingan dari admin <strong style="color:var(--accent2)">tanpa biaya apapun</strong>.</p>
     </div>
-    <div class="bcard">
+    <div class="bcard" data-searchable>
       <div class="bcard-icon">&#128101;</div>
       <h3>Komunitas Kreator</h3>
       <p>Bergabung dengan komunitas kreator anime &amp; J-POP terbesar di Indonesia lewat grup khusus.</p>
@@ -484,23 +575,23 @@
   <p class="section-label">&#128203; Syarat</p>
   <h2 class="section-title">Syarat Pendaftaran</h2>
   <ul class="req-list">
-    <li>
+    <li data-searchable>
       <div class="icon">&#128100;</div>
       <div>Memiliki akun media sosial dengan minimal <strong>lebih dari 100 followers</strong>.</div>
     </li>
-    <li>
+    <li data-searchable>
       <div class="icon">&#127909;</div>
       <div>Buat <strong>4 video</strong> terlebih dahulu sebagai syarat pendaftaran sebelum daftar resmi.</div>
     </li>
-    <li>
+    <li data-searchable>
       <div class="icon">&#128208;</div>
       <div>Resolusi minimal <strong>720p</strong> (rekomendasinya 1080p). Ratio <strong>16:9 atau 9:16</strong> &mdash; rekomendasinya 16:9.</div>
     </li>
-    <li>
+    <li data-searchable>
       <div class="icon">&#9889;</div>
       <div>Diusahakan bikin <strong>1&ndash;2 video per hari</strong> selama pengerjaan untuk mempercepat review dan mengurangi risiko tidak lolos.</div>
     </li>
-    <li>
+    <li data-searchable>
       <div class="icon">&#9989;</div>
       <div>Semua konten wajib <strong>original</strong>. Reupload dari platform lain tidak diperbolehkan. Tim review Bstation memeriksa orisinalitas konten.</div>
     </li>
@@ -519,15 +610,15 @@
   <h2 class="section-title">Pilihan Kategori Konten</h2>
   <p style="color:var(--muted);margin-bottom:28px;font-size:.93rem">Cukup pilih <strong style="color:#fff">salah satu</strong> kategori berikut. Semua kategori durasi minimal 1&ndash;20 menit (kecuali AMV).</p>
   <div class="cat-grid">
-    <div class="cat-card">
+    <div class="cat-card" data-searchable>
       <span class="emoji">&#9999;&#65039;</span>
       <h4>Drawing</h4>
-      <p>Wajib ada interaksi (teks/voice). Portrait atau landscape. Tidak harus tampilkan wajah. <em style="color:var(--pink)">Rekomen untuk pemula!</em></p>
+      <p>Wajib ada interaksi (teks/voice). Portrait atau landscape. Tidak harus tampilkan wajah. <em style="color:var(--accent)">Rekomen untuk pemula!</em></p>
       <div class="cat-links">
         <a class="cat-link" href="https://bili.im/qzlsjg5" target="_blank">&#127909; Lihat Contoh Drawing</a>
       </div>
     </div>
-    <div class="cat-card">
+    <div class="cat-card" data-searchable>
       <span class="emoji">&#128250;</span>
       <h4>Review Anime / Film</h4>
       <p>Ulasan anime atau film favorit kamu. Durasi 1&ndash;20 menit.</p>
@@ -535,7 +626,7 @@
         <a class="cat-link" href="https://bili.im/yORwhjs" target="_blank">&#127909; Contoh: MC Overpower Dikira Lemah</a>
       </div>
     </div>
-    <div class="cat-card">
+    <div class="cat-card" data-searchable>
       <span class="emoji">&#127925;</span>
       <h4>AMV</h4>
       <p>Anime Music Video. Durasi minimal <strong>30 detik</strong>, maksimal 20 menit.</p>
@@ -543,7 +634,7 @@
         <a class="cat-link" href="https://bili.im/XarAa0Q" target="_blank">&#127909; Contoh: Kamado Tanjiro AMV</a>
       </div>
     </div>
-    <div class="cat-card">
+    <div class="cat-card" data-searchable>
       <span class="emoji">&#127897;&#65039;</span>
       <h4>Dubbing Anime</h4>
       <p>Parodi dubbing atau fan dubbing anime. Kreatif &amp; ekspresif!</p>
@@ -553,7 +644,7 @@
         <a class="cat-link" href="https://www.bilibili.tv/id/space/1307095768" target="_blank">&#127909; Channel Fan Dubbing</a>
       </div>
     </div>
-    <div class="cat-card">
+    <div class="cat-card" data-searchable>
       <span class="emoji">&#128248;</span>
       <h4>Cosplay</h4>
       <p>Tampilkan kostum karakter favoritmu. Durasi 1&ndash;20 menit.</p>
@@ -561,7 +652,7 @@
         <a class="cat-link" href="https://www.bilibili.tv/id/space/1228460669" target="_blank">&#127909; Lihat Contoh Cosplay</a>
       </div>
     </div>
-    <div class="cat-card">
+    <div class="cat-card" data-searchable>
       <span class="emoji">&#127908;</span>
       <h4>Sing Cover</h4>
       <p>Cover lagu anime atau J-POP kesukaanmu. Durasi 1&ndash;20 menit.</p>
@@ -569,7 +660,7 @@
         <a class="cat-link" href="https://bili.im/meLUJv8" target="_blank">&#127909; Lihat Contoh Sing Cover</a>
       </div>
     </div>
-    <div class="cat-card">
+    <div class="cat-card" data-searchable>
       <span class="emoji">&#128131;</span>
       <h4>Dance</h4>
       <p>Tarian anime, J-POP, atau K-POP. Durasi 1&ndash;20 menit.</p>
@@ -587,22 +678,22 @@
   <h2 class="section-title">Sistem Reward</h2>
   <p style="color:var(--muted);margin-bottom:28px;font-size:.93rem">Sistem reward bukan gajian &mdash; ini adalah <strong style="color:#fff">kompetisi</strong> dengan kreator lain. Jadi, rajin adalah kuncinya!</p>
   <div class="reward-grid">
-    <div class="reward-card highlight">
+    <div class="reward-card highlight" data-searchable>
       <div class="amount">Rp 50rb</div>
       <h4>&#127942; Weekly &mdash; Video</h4>
       <p>Reward mingguan untuk konten video. Dilihat dari keaktifan, viewers, dan engagement. Hanya bisa didapat sekali seminggu.</p>
     </div>
-    <div class="reward-card highlight">
+    <div class="reward-card highlight" data-searchable>
       <div class="amount">Rp 20rb</div>
       <h4>&#9999;&#65039; Weekly &mdash; Tulisan</h4>
       <p>Reward mingguan untuk konten tulisan/blog. Dinilai dari kualitas dan engagement.</p>
     </div>
-    <div class="reward-card">
+    <div class="reward-card" data-searchable>
       <div class="amount">Rp 20&ndash;150rb</div>
       <h4>&#128197; MAC &mdash; Post &amp; Blog</h4>
       <p>Reward bulanan dari konsistensi posting konten tulisan atau post selama sebulan penuh.</p>
     </div>
-    <div class="reward-card">
+    <div class="reward-card" data-searchable>
       <div class="amount">Rp 20&ndash;300rb</div>
       <h4>&#127916; MAC &mdash; Video</h4>
       <p>Reward bulanan dari konsistensi upload video. Semakin rajin, semakin besar potensi reward-mu!</p>
@@ -670,6 +761,11 @@
       </div>
     </div>
   </a>
+  <div style="text-align:center;margin-top:32px;">
+    <a href="https://rsbcreatormanager.com/form?ref=BAA11DF3" target="_blank" style="display:inline-flex;align-items:center;gap:10px;background:linear-gradient(135deg,#FF4B8B,#C0306A);color:#fff;text-decoration:none;font-family:'Rajdhani',sans-serif;font-size:1.2rem;font-weight:700;letter-spacing:.08em;padding:16px 44px;border-radius:10px;box-shadow:0 4px 32px rgba(255,75,139,.45);transition:transform .2s,box-shadow .2s;" onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='0 8px 40px rgba(255,75,139,.65)'" onmouseout="this.style.transform='none';this.style.boxShadow='0 4px 32px rgba(255,75,139,.45)'">
+      &#128221; DAFTAR JADI KREATOR SEKARANG
+    </a>
+  </div>
 </section>
 
 <div class="divider"></div>
@@ -712,6 +808,7 @@
 </footer>
 
 <script>
+  // Scroll reveal
   const reveals = document.querySelectorAll('.reveal');
   const io = new IntersectionObserver((entries) => {
     entries.forEach(e => {
@@ -719,6 +816,59 @@
     });
   }, { threshold: 0.1 });
   reveals.forEach(el => io.observe(el));
+
+  // Search
+  const searchInput = document.getElementById('searchInput');
+  const searchClear = document.getElementById('searchClear');
+  const searchCount = document.getElementById('searchCount');
+  const allItems = document.querySelectorAll('[data-searchable]');
+
+  allItems.forEach(el => { el._originalHTML = el.innerHTML; });
+
+  function clearSearch() {
+    searchInput.value = '';
+    searchInput.dispatchEvent(new Event('input'));
+    searchInput.focus();
+  }
+
+  function escapeRegex(str) {
+    return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  }
+
+  function highlight(el, query) {
+    el.innerHTML = el._originalHTML;
+    if (!query) return;
+    const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
+    const nodes = [];
+    let node;
+    while ((node = walker.nextNode())) nodes.push(node);
+    const re = new RegExp('(' + escapeRegex(query) + ')', 'gi');
+    nodes.forEach(n => {
+      if (!n.textContent.match(re)) return;
+      const span = document.createElement('span');
+      span.innerHTML = n.textContent.replace(re, '<mark>$1</mark>');
+      n.parentNode.replaceChild(span, n);
+    });
+  }
+
+  searchInput.addEventListener('input', () => {
+    const q = searchInput.value.trim().toLowerCase();
+    searchClear.classList.toggle('visible', q.length > 0);
+    searchCount.classList.toggle('visible', q.length > 0);
+    let matched = 0;
+    allItems.forEach(el => {
+      const text = el._originalHTML.replace(/<[^>]+>/g, ' ').toLowerCase();
+      const matches = q === '' || text.includes(q);
+      el.classList.toggle('search-hidden', !matches);
+      if (matches && q !== '') { highlight(el, q); matched++; }
+      else { el.innerHTML = el._originalHTML; }
+    });
+    if (q !== '') searchCount.textContent = matched + ' hasil ditemukan';
+    if (q !== '') {
+      const first = [...allItems].find(el => !el.classList.contains('search-hidden'));
+      if (first) first.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  });
 </script>
 </body>
 </html>
