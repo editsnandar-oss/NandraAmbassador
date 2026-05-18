@@ -830,9 +830,9 @@
   <div class="settings-section">
     <div class="settings-section-label">Ukuran Teks</div>
     <div class="font-btns">
-      <button class="font-btn" onclick="setFontSize('small')">Kecil</button>
-      <button class="font-btn active" onclick="setFontSize('normal')">Normal</button>
-      <button class="font-btn" onclick="setFontSize('large')">Besar</button>
+      <button class="font-btn" onclick="setFontSize('small',this)">Kecil</button>
+      <button class="font-btn active" onclick="setFontSize('normal',this)">Normal</button>
+      <button class="font-btn" onclick="setFontSize('large',this)">Besar</button>
     </div>
   </div>
 
@@ -1388,6 +1388,132 @@
   </div>
 </section>
 
+<div class="divider"></div>
+
+<section id="sec-testimoni" class="reveal">
+  <p class="section-label" style="display:flex;align-items:center;gap:6px;">
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+    Testimoni
+  </p>
+  <h2 class="section-title">Kata Mereka yang Sudah Bergabung</h2>
+  <p style="color:var(--muted);margin-bottom:32px;font-size:.93rem">Kreator nyata, pengalaman nyata. Tonton langsung cerita dari mereka yang sudah merasakan manfaat jadi Kreator Bstation!</p>
+
+  <!-- Video Testimoni -->
+  <div style="max-width:640px;margin:0 auto 40px;">
+    <a href="https://drive.google.com/file/d/149CusnDhuqfCZajavPrgb9Be0m7FQYt-/view" target="_blank" style="display:block;text-decoration:none;">
+      <div style="background:var(--card);border:1px solid rgba(0,198,255,.3);border-radius:16px;overflow:hidden;transition:transform .25s,border-color .25s,box-shadow .25s;box-shadow:0 4px 32px rgba(0,198,255,.1);"
+           onmouseover="this.style.transform='translateY(-4px)';this.style.borderColor='rgba(0,198,255,.6)';this.style.boxShadow='0 12px 48px rgba(0,198,255,.22)'"
+           onmouseout="this.style.transform='none';this.style.borderColor='rgba(0,198,255,.3)';this.style.boxShadow='0 4px 32px rgba(0,198,255,.1)'">
+        <!-- Thumbnail area -->
+        <div style="position:relative;aspect-ratio:16/9;background:linear-gradient(135deg,#050D1A,#0A1628);display:flex;align-items:center;justify-content:center;">
+          <!-- Background glow -->
+          <div style="position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 50% 50%,rgba(0,198,255,.08),transparent);pointer-events:none;"></div>
+          <!-- Play icon besar -->
+          <div style="position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:18px;">
+            <div style="width:80px;height:80px;background:linear-gradient(135deg,var(--accent),var(--accent2));border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 0 40px rgba(0,198,255,.5);">
+              <div style="width:0;height:0;border-top:18px solid transparent;border-bottom:18px solid transparent;border-left:30px solid #fff;margin-left:7px;"></div>
+            </div>
+            <div style="font-family:'Rajdhani',sans-serif;font-size:.85rem;font-weight:700;letter-spacing:.1em;color:rgba(255,255,255,.6);text-transform:uppercase;">Klik untuk Menonton</div>
+          </div>
+          <!-- Label pojok -->
+          <div style="position:absolute;top:14px;left:14px;background:rgba(0,198,255,.15);border:1px solid rgba(0,198,255,.4);border-radius:6px;padding:4px 10px;font-family:'Rajdhani',sans-serif;font-size:.68rem;font-weight:700;letter-spacing:.1em;color:var(--accent);text-transform:uppercase;">
+            Video Testimoni
+          </div>
+          <!-- Google Drive badge pojok kanan -->
+          <div style="position:absolute;top:14px;right:14px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:6px;padding:4px 10px;font-family:'Rajdhani',sans-serif;font-size:.68rem;font-weight:700;letter-spacing:.06em;color:rgba(255,255,255,.5);display:flex;align-items:center;gap:5px;">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Google Drive
+          </div>
+        </div>
+        <!-- Info bar bawah -->
+        <div style="padding:18px 22px;display:flex;align-items:center;gap:14px;">
+          <div style="width:38px;height:38px;background:rgba(0,198,255,.12);border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          </div>
+          <div style="flex:1;">
+            <div style="font-family:'Rajdhani',sans-serif;font-weight:700;font-size:1rem;color:#fff;letter-spacing:.03em;margin-bottom:3px;">Testimoni Kreator Bstation Indonesia</div>
+            <div style="font-size:.75rem;color:var(--muted);">Video &bull; NandraMv &bull; Buka di Google Drive</div>
+          </div>
+          <div style="flex-shrink:0;color:var(--accent);">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          </div>
+        </div>
+      </div>
+    </a>
+  </div>
+
+  <!-- Testimoni Cards -->
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;">
+
+    <div class="bcard" data-searchable>
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;">
+        <div style="width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:1.3rem;color:#fff;flex-shrink:0;">A</div>
+        <div>
+          <div style="font-family:'Rajdhani',sans-serif;font-weight:700;font-size:.95rem;color:#fff;letter-spacing:.03em;">Anime Creator</div>
+          <div style="font-size:.72rem;color:var(--muted);">Kreator Bstation &bull; Konten Anime</div>
+        </div>
+        <div style="margin-left:auto;display:flex;gap:2px;">
+          <span style="color:#F59E0B;font-size:.85rem;">★★★★★</span>
+        </div>
+      </div>
+      <p style="font-size:.88rem;color:#9DAFC8;line-height:1.75;font-style:italic;">"Daftar lewat NandraMv prosesnya gampang banget, dibantu step by step sampai akun approved. Sekarang udah bisa upload konten dan dapet reward bulanan!"</p>
+      <div style="margin-top:14px;padding-top:12px;border-top:1px solid rgba(0,198,255,.1);font-size:.72rem;color:var(--muted);font-family:'Rajdhani',sans-serif;letter-spacing:.06em;display:flex;align-items:center;gap:6px;">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        Kreator Terverifikasi Bstation
+      </div>
+    </div>
+
+    <div class="bcard" data-searchable>
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;">
+        <div style="width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#A855F7,#7C3AED);display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:1.3rem;color:#fff;flex-shrink:0;">G</div>
+        <div>
+          <div style="font-family:'Rajdhani',sans-serif;font-weight:700;font-size:.95rem;color:#fff;letter-spacing:.03em;">Gaming Streamer</div>
+          <div style="font-size:.72rem;color:var(--muted);">Kreator Bstation &bull; Konten Game</div>
+        </div>
+        <div style="margin-left:auto;display:flex;gap:2px;">
+          <span style="color:#F59E0B;font-size:.85rem;">★★★★★</span>
+        </div>
+      </div>
+      <p style="font-size:.88rem;color:#9DAFC8;line-height:1.75;font-style:italic;">"Awalnya ragu, tapi setelah tonton tutorial dan tanya-tanya ke NandraMv, akhirnya daftar juga. Reward pertama langsung cair bulan berikutnya. Worth it banget!"</p>
+      <div style="margin-top:14px;padding-top:12px;border-top:1px solid rgba(0,198,255,.1);font-size:.72rem;color:var(--muted);font-family:'Rajdhani',sans-serif;letter-spacing:.06em;display:flex;align-items:center;gap:6px;">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        Kreator Terverifikasi Bstation
+      </div>
+    </div>
+
+    <div class="bcard" data-searchable>
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;">
+        <div style="width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#22C55E,#16A34A);display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:1.3rem;color:#fff;flex-shrink:0;">M</div>
+        <div>
+          <div style="font-family:'Rajdhani',sans-serif;font-weight:700;font-size:.95rem;color:#fff;letter-spacing:.03em;">Music Lover</div>
+          <div style="font-size:.72rem;color:var(--muted);">Kreator Bstation &bull; Konten J-POP</div>
+        </div>
+        <div style="margin-left:auto;display:flex;gap:2px;">
+          <span style="color:#F59E0B;font-size:.85rem;">★★★★★</span>
+        </div>
+      </div>
+      <p style="font-size:.88rem;color:#9DAFC8;line-height:1.75;font-style:italic;">"Platform-nya ramah kreator banget. Bimbingan dari NandraMv juga super sabar dan responsif. Kalau mau serius jadi kreator konten, Bstation pilihan tepat!"</p>
+      <div style="margin-top:14px;padding-top:12px;border-top:1px solid rgba(0,198,255,.1);font-size:.72rem;color:var(--muted);font-family:'Rajdhani',sans-serif;letter-spacing:.06em;display:flex;align-items:center;gap:6px;">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        Kreator Terverifikasi Bstation
+      </div>
+    </div>
+
+  </div>
+
+  <!-- CTA di bawah testimoni -->
+  <div style="text-align:center;margin-top:40px;padding:28px 24px;background:rgba(0,198,255,.04);border:1px solid rgba(0,198,255,.15);border-radius:14px;">
+    <p style="font-family:'Rajdhani',sans-serif;font-size:1.05rem;font-weight:700;color:#fff;letter-spacing:.03em;margin-bottom:6px;">Mau jadi bagian dari mereka?</p>
+    <p style="font-size:.88rem;color:var(--muted);margin-bottom:20px;">Daftar gratis sekarang dan mulai perjalananmu sebagai Kreator Bstation!</p>
+    <a href="https://rsbcreatormanager.com/form?ref=BAA11DF3" target="_blank" style="display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;text-decoration:none;font-family:'Rajdhani',sans-serif;font-size:1rem;font-weight:700;letter-spacing:.08em;padding:13px 32px;border-radius:9px;box-shadow:0 4px 24px rgba(0,198,255,.35);transition:transform .2s,box-shadow .2s;" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 8px 32px rgba(0,198,255,.55)'" onmouseout="this.style.transform='none';this.style.boxShadow='0 4px 24px rgba(0,198,255,.35)'">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+      DAFTAR SEKARANG — GRATIS!
+    </a>
+  </div>
+</section>
+
+<div class="divider"></div>
+
 <div class="contact-section reveal">
   <h2>Siap Bergabung?</h2>
   <p>Hubungi saya langsung atau join grup untuk mulai perjalananmu sebagai Kreator Bstation!</p>
@@ -1502,11 +1628,11 @@
     })();
     style.textContent = this.checked ? '' : 'body::before { opacity: 0 !important; }';
   });
-  function setFontSize(size) {
+  function setFontSize(size, btn) {
     const map = { small: '13px', normal: '16px', large: '19px' };
     document.documentElement.style.fontSize = map[size];
     document.querySelectorAll('.font-btn').forEach(b => b.classList.remove('active'));
-    event.target.classList.add('active');
+    if (btn) btn.classList.add('active');
   }
   function setAccent(el) {
     document.querySelectorAll('.swatch').forEach(s => s.classList.remove('active'));
@@ -1534,6 +1660,7 @@
     { id: 'sec-reward', el: document.getElementById('sec-reward') },
     { id: 'sec-event', el: document.getElementById('sec-event') },
     { id: 'sec-tutorial', el: document.getElementById('sec-tutorial') },
+    { id: 'sec-testimoni', el: document.getElementById('sec-testimoni') },
   ];
   const bnavItems = document.querySelectorAll('.bnav-item');
   window.addEventListener('scroll', () => {
@@ -1714,6 +1841,12 @@
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="14" rx="2"/><polygon points="10 9 15 12 10 15 10 9"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="18" x2="12" y2="21"/></svg>
     </span>
     <span class="bnav-label">Tutorial</span>
+  </a>
+  <a class="bnav-item" href="#sec-testimoni" data-nav="sec-testimoni" onclick="smoothNav(event,'sec-testimoni')">
+    <span class="bnav-icon">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+    </span>
+    <span class="bnav-label">Testimoni</span>
   </a>
 </nav>
 
