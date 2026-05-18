@@ -113,6 +113,90 @@
   }
   .no-results.visible { display: block; }
 
+  /* ── SETTINGS BUTTON ── */
+  .settings-btn {
+    width: 38px; height: 38px;
+    background: rgba(0,198,255,.08);
+    border: 1px solid rgba(0,198,255,.25);
+    border-radius: 9px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.05rem;
+    cursor: pointer;
+    color: var(--muted);
+    flex-shrink: 0;
+    transition: background .2s, border-color .2s, color .2s, transform .3s;
+  }
+  .settings-btn:hover, .settings-btn.active {
+    background: rgba(0,198,255,.18);
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+  .settings-btn.active { transform: rotate(60deg); }
+
+  /* ── SETTINGS PANEL ── */
+  .settings-panel {
+    position: fixed;
+    top: 62px; right: 12px;
+    width: 290px;
+    background: rgba(8,13,24,.97);
+    border: 1px solid rgba(0,198,255,.2);
+    border-radius: 14px;
+    z-index: 9998;
+    box-shadow: 0 8px 48px rgba(0,0,0,.6), 0 0 0 1px rgba(0,198,255,.05);
+    backdrop-filter: blur(20px);
+    opacity: 0;
+    transform: translateY(-8px) scale(.97);
+    pointer-events: none;
+    transition: opacity .2s, transform .2s;
+    overflow: hidden;
+  }
+  .settings-panel.open { opacity: 1; transform: translateY(0) scale(1); pointer-events: all; }
+  .settings-header {
+    padding: 14px 18px 12px;
+    border-bottom: 1px solid rgba(0,198,255,.1);
+    font-family: 'Rajdhani', sans-serif;
+    font-size: .72rem;
+    font-weight: 700;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .settings-section { padding: 12px 18px; border-bottom: 1px solid rgba(255,255,255,.04); }
+  .settings-section:last-child { border-bottom: none; padding-bottom: 14px; }
+  .settings-section-label {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: .68rem;
+    font-weight: 700;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 10px;
+  }
+  .setting-row { display: flex; align-items: center; justify-content: space-between; padding: 7px 0; gap: 12px; }
+  .setting-row-label { display: flex; align-items: center; gap: 9px; font-family: 'Rajdhani', sans-serif; font-size: .88rem; font-weight: 600; color: var(--text); letter-spacing: .02em; }
+  .setting-row-label .sico { font-size: .95rem; width: 22px; text-align: center; }
+  .toggle { position: relative; width: 40px; height: 22px; flex-shrink: 0; }
+  .toggle input { opacity: 0; width: 0; height: 0; }
+  .toggle-slider { position: absolute; inset: 0; background: rgba(255,255,255,.1); border-radius: 999px; cursor: pointer; transition: background .25s; }
+  .toggle-slider::before { content: ''; position: absolute; width: 16px; height: 16px; left: 3px; top: 3px; background: #fff; border-radius: 50%; transition: transform .25s; }
+  .toggle input:checked + .toggle-slider { background: var(--accent); }
+  .toggle input:checked + .toggle-slider::before { transform: translateX(18px); }
+  .font-btns { display: flex; gap: 6px; }
+  .font-btn { flex: 1; padding: 6px 0; background: rgba(0,198,255,.07); border: 1px solid rgba(0,198,255,.15); border-radius: 7px; color: var(--text); font-family: 'Rajdhani', sans-serif; font-weight: 700; font-size: .82rem; letter-spacing: .05em; cursor: pointer; transition: background .2s, border-color .2s, color .2s; text-align: center; }
+  .font-btn:hover { background: rgba(0,198,255,.15); border-color: var(--accent); color: var(--accent); }
+  .font-btn.active { background: rgba(0,198,255,.2); border-color: var(--accent); color: var(--accent); }
+  .color-swatches { display: flex; gap: 8px; flex-wrap: wrap; }
+  .swatch { width: 28px; height: 28px; border-radius: 50%; cursor: pointer; border: 2px solid transparent; transition: transform .15s, border-color .15s; flex-shrink: 0; }
+  .swatch:hover { transform: scale(1.18); }
+  .swatch.active { border-color: #fff; transform: scale(1.12); }
+  .scroll-top-btn { width: 100%; padding: 9px; background: rgba(0,198,255,.08); border: 1px solid rgba(0,198,255,.2); border-radius: 8px; color: var(--accent); font-family: 'Rajdhani', sans-serif; font-weight: 700; font-size: .82rem; letter-spacing: .08em; cursor: pointer; transition: background .2s, border-color .2s; display: flex; align-items: center; justify-content: center; gap: 7px; }
+  .scroll-top-btn:hover { background: rgba(0,198,255,.18); border-color: var(--accent); }
+
   /* push content below fixed search bar */
   body { padding-top: 60px; }
 
@@ -495,6 +579,54 @@
   <input class="search-input" id="searchInput" type="text" placeholder="Cari informasi... (contoh: reward, syarat, drawing, AMV)" autocomplete="off">
   <button class="search-clear" id="searchClear" onclick="clearSearch()">&#10005;</button>
   <span class="search-results-count" id="searchCount"></span>
+  <button class="settings-btn" id="settingsBtn" title="Pengaturan">&#9881;&#65039;</button>
+</div>
+
+<!-- SETTINGS PANEL -->
+<div class="settings-panel" id="settingsPanel">
+  <div class="settings-header">&#9881;&#65039; &nbsp;Pengaturan</div>
+
+  <div class="settings-section">
+    <div class="settings-section-label">Tampilan</div>
+    <div class="setting-row">
+      <span class="setting-row-label"><span class="sico">&#127763;</span> Mode Gelap</span>
+      <label class="toggle"><input type="checkbox" id="darkModeToggle" checked><span class="toggle-slider"></span></label>
+    </div>
+    <div class="setting-row">
+      <span class="setting-row-label"><span class="sico">&#10024;</span> Animasi</span>
+      <label class="toggle"><input type="checkbox" id="animToggle" checked><span class="toggle-slider"></span></label>
+    </div>
+    <div class="setting-row">
+      <span class="setting-row-label"><span class="sico">&#128261;</span> Noise Background</span>
+      <label class="toggle"><input type="checkbox" id="noiseToggle" checked><span class="toggle-slider"></span></label>
+    </div>
+  </div>
+
+  <div class="settings-section">
+    <div class="settings-section-label">Ukuran Teks</div>
+    <div class="font-btns">
+      <button class="font-btn" onclick="setFontSize('small')">Kecil</button>
+      <button class="font-btn active" onclick="setFontSize('normal')">Normal</button>
+      <button class="font-btn" onclick="setFontSize('large')">Besar</button>
+    </div>
+  </div>
+
+  <div class="settings-section">
+    <div class="settings-section-label">Warna Aksen</div>
+    <div class="color-swatches">
+      <div class="swatch active" style="background:#00C6FF" data-color="#00C6FF" data-color2="#0077FF" onclick="setAccent(this)" title="Biru (Default)"></div>
+      <div class="swatch" style="background:#FF4B8B" data-color="#FF4B8B" data-color2="#C0306A" onclick="setAccent(this)" title="Pink"></div>
+      <div class="swatch" style="background:#A855F7" data-color="#A855F7" data-color2="#7C3AED" onclick="setAccent(this)" title="Ungu"></div>
+      <div class="swatch" style="background:#22C55E" data-color="#22C55E" data-color2="#16A34A" onclick="setAccent(this)" title="Hijau"></div>
+      <div class="swatch" style="background:#F59E0B" data-color="#F59E0B" data-color2="#D97706" onclick="setAccent(this)" title="Kuning"></div>
+      <div class="swatch" style="background:#F97316" data-color="#F97316" data-color2="#EA580C" onclick="setAccent(this)" title="Orange"></div>
+    </div>
+  </div>
+
+  <div class="settings-section">
+    <div class="settings-section-label">Navigasi</div>
+    <button class="scroll-top-btn" onclick="window.scrollTo({top:0,behavior:'smooth'});closeSettings();">&#8679; Kembali ke Atas</button>
+  </div>
 </div>
 
 <div class="hero">
@@ -615,7 +747,7 @@
       <h4>Drawing</h4>
       <p>Wajib ada interaksi (teks/voice). Portrait atau landscape. Tidak harus tampilkan wajah. <em style="color:var(--accent)">Rekomen untuk pemula!</em></p>
       <div class="cat-links">
-        <a class="cat-link" href="https://bili.im/qzlsjg5" target="_blank">&#127909; Lihat Contoh Drawing</a>
+        <a class="cat-link" href="https://bili.im/aCU8cB6" target="_blank">&#127909; Lihat Contoh Drawing</a>
       </div>
     </div>
     <div class="cat-card" data-searchable>
@@ -712,22 +844,45 @@
 <section class="reveal">
   <p class="section-label">&#127881; Event</p>
   <h2 class="section-title">Event Bstation</h2>
-  <p style="color:var(--muted);margin-bottom:28px;font-size:.93rem">Bstation sering ngadain event kompetisi khusus kreator &mdash; kesempatan tambahan untuk dapat reward lebih banyak, bahkan dalam bentuk <strong style="color:var(--pink)">dollar</strong>! Berikut event yang sudah saya ikuti dan berhasil dapat reward:</p>
-  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;">
-    <div style="background:var(--card);border:1px solid rgba(255,75,139,.3);border-radius:14px;padding:28px 24px;position:relative;overflow:hidden;">
-      <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--pink),var(--blue));"></div>
-      <div style="font-size:1.8rem;margin-bottom:12px;">&#127942;</div>
-      <h3 style="font-family:'Rajdhani',sans-serif;font-size:1.15rem;font-weight:700;color:#fff;margin-bottom:8px;letter-spacing:.04em;">Kompetisi Kreasi Unggahan 2</h3>
-      <p style="font-size:.85rem;color:var(--muted);line-height:1.7;margin-bottom:16px;">Event kompetisi resmi Bstation yang saya ikuti dan berhasil mendapatkan reward. Pantau terus event serupa!</p>
-      <a href="https://bili.im/Rn1qxvN" target="_blank" style="display:inline-flex;align-items:center;gap:6px;font-size:.8rem;color:var(--blue);text-decoration:none;background:rgba(0,198,255,.08);border:1px solid rgba(0,198,255,.25);border-radius:8px;padding:8px 14px;font-family:'Rajdhani',sans-serif;font-weight:600;letter-spacing:.04em;transition:background .2s;" onmouseover="this.style.background='rgba(0,198,255,.2)'" onmouseout="this.style.background='rgba(0,198,255,.08)'">&#127909; Lihat Event</a>
-    </div>
-    <div style="background:var(--card);border:1px solid rgba(255,75,139,.3);border-radius:14px;padding:28px 24px;position:relative;overflow:hidden;">
-      <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--blue),var(--pink));"></div>
-      <div style="font-size:1.8rem;margin-bottom:12px;">&#127941;</div>
-      <h3 style="font-family:'Rajdhani',sans-serif;font-size:1.15rem;font-weight:700;color:#fff;margin-bottom:8px;letter-spacing:.04em;">Kompetisi Kreasi Unggahan 3</h3>
-      <p style="font-size:.85rem;color:var(--muted);line-height:1.7;margin-bottom:16px;">Lanjutan seri kompetisi kreasi Bstation. Saya kembali ikut dan dapat reward! Jangan sampai ketinggalan event berikutnya.</p>
-      <a href="https://bili.im/Rn1qxvN" target="_blank" style="display:inline-flex;align-items:center;gap:6px;font-size:.8rem;color:var(--blue);text-decoration:none;background:rgba(0,198,255,.08);border:1px solid rgba(0,198,255,.25);border-radius:8px;padding:8px 14px;font-family:'Rajdhani',sans-serif;font-weight:600;letter-spacing:.04em;transition:background .2s;" onmouseover="this.style.background='rgba(0,198,255,.2)'" onmouseout="this.style.background='rgba(0,198,255,.08)'">&#127909; Lihat Event</a>
-    </div>
+  <p style="color:var(--muted);margin-bottom:28px;font-size:.93rem">Bstation sering ngadain event kompetisi khusus kreator &mdash; kesempatan tambahan untuk dapat reward lebih banyak, bahkan dalam bentuk <strong style="color:var(--accent)">dollar</strong>! Berikut event yang sudah saya ikuti dan berhasil dapat reward:</p>
+  <div style="display:flex;flex-direction:column;gap:14px;">
+
+    <a href="https://bili.im/Rn1qxvN" target="_blank" data-searchable style="display:flex;align-items:center;gap:16px;background:var(--card);border:1px solid var(--border);border-radius:16px;padding:16px 20px;text-decoration:none;transition:transform .2s,border-color .2s,background .2s;" onmouseover="this.style.transform='translateY(-2px)';this.style.borderColor='rgba(0,198,255,.6)';this.style.background='#111926'" onmouseout="this.style.transform='none';this.style.borderColor='rgba(0,198,255,.22)';this.style.background='var(--card)'">
+      <div style="width:52px;height:52px;background:rgba(0,198,255,.12);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0;">&#127942;</div>
+      <div style="flex:1;min-width:0;">
+        <div style="font-family:'Rajdhani',sans-serif;font-weight:700;font-size:1rem;color:#fff;letter-spacing:.04em;margin-bottom:3px;">Kompetisi Kreasi Unggahan 2</div>
+        <div style="font-size:.8rem;color:var(--muted);">Event kompetisi resmi Bstation &bull; Dapat reward &#10024;</div>
+      </div>
+      <div style="color:var(--muted);font-size:1rem;flex-shrink:0;">&#8594;</div>
+    </a>
+
+    <a href="https://bili.im/Rn1qxvN" target="_blank" data-searchable style="display:flex;align-items:center;gap:16px;background:var(--card);border:1px solid var(--border);border-radius:16px;padding:16px 20px;text-decoration:none;transition:transform .2s,border-color .2s,background .2s;" onmouseover="this.style.transform='translateY(-2px)';this.style.borderColor='rgba(0,198,255,.6)';this.style.background='#111926'" onmouseout="this.style.transform='none';this.style.borderColor='rgba(0,198,255,.22)';this.style.background='var(--card)'">
+      <div style="width:52px;height:52px;background:rgba(0,198,255,.12);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0;">&#127941;</div>
+      <div style="flex:1;min-width:0;">
+        <div style="font-family:'Rajdhani',sans-serif;font-weight:700;font-size:1rem;color:#fff;letter-spacing:.04em;margin-bottom:3px;">Kompetisi Kreasi Unggahan 3</div>
+        <div style="font-size:.8rem;color:var(--muted);">Lanjutan seri kompetisi kreasi Bstation &bull; Dapat reward &#10024;</div>
+      </div>
+      <div style="color:var(--muted);font-size:1rem;flex-shrink:0;">&#8594;</div>
+    </a>
+
+    <a href="https://www.instagram.com/p/DQGLBybEyx-/?igsh=MXJoengzOGFqZGNqdQ==" target="_blank" data-searchable style="display:flex;align-items:center;gap:16px;background:var(--card);border:1px solid var(--border);border-radius:16px;padding:16px 20px;text-decoration:none;transition:transform .2s,border-color .2s,background .2s;" onmouseover="this.style.transform='translateY(-2px)';this.style.borderColor='rgba(0,198,255,.6)';this.style.background='#111926'" onmouseout="this.style.transform='none';this.style.borderColor='rgba(0,198,255,.22)';this.style.background='var(--card)'">
+      <div style="width:52px;height:52px;background:rgba(0,198,255,.12);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0;">&#128293;</div>
+      <div style="flex:1;min-width:0;">
+        <div style="font-family:'Rajdhani',sans-serif;font-weight:700;font-size:1rem;color:#fff;letter-spacing:.04em;margin-bottom:3px;">TRENDINGHUNT</div>
+        <div style="font-size:.8rem;color:var(--muted);">Event Bstation di Instagram &bull; Dapat reward &#10024;</div>
+      </div>
+      <div style="color:var(--muted);font-size:1rem;flex-shrink:0;">&#8594;</div>
+    </a>
+
+    <a href="https://www.instagram.com/p/DYUfS2nk4bC/?img_index=1&igsh=MWczdDE3eDNhZjR1NA==" target="_blank" data-searchable style="display:flex;align-items:center;gap:16px;background:var(--card);border:1px solid var(--border);border-radius:16px;padding:16px 20px;text-decoration:none;transition:transform .2s,border-color .2s,background .2s;" onmouseover="this.style.transform='translateY(-2px)';this.style.borderColor='rgba(0,198,255,.6)';this.style.background='#111926'" onmouseout="this.style.transform='none';this.style.borderColor='rgba(0,198,255,.22)';this.style.background='var(--card)'">
+      <div style="width:52px;height:52px;background:rgba(0,198,255,.12);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0;">&#127803;</div>
+      <div style="flex:1;min-width:0;">
+        <div style="font-family:'Rajdhani',sans-serif;font-weight:700;font-size:1rem;color:#fff;letter-spacing:.04em;margin-bottom:3px;">NAKAMAFESTIVAL</div>
+        <div style="font-size:.8rem;color:var(--muted);">Event festival kreator Bstation &bull; Dapat reward &#10024;</div>
+      </div>
+      <div style="color:var(--muted);font-size:1rem;flex-shrink:0;">&#8594;</div>
+    </a>
+
   </div>
   <div style="background:rgba(0,198,255,.05);border:1px solid rgba(0,198,255,.25);border-left:4px solid var(--blue);border-radius:10px;padding:18px 22px;margin-top:24px;font-size:.88rem;color:#BBBBD0;line-height:1.7;">
     &#128276; <strong style="color:var(--blue)">Tips:</strong> Selalu pantau grup WhatsApp kreator untuk info event terbaru dari Bstation. Event bisa datang kapan saja dan reward bisa jauh lebih besar dari reward reguler!
@@ -850,6 +1005,71 @@
       span.innerHTML = n.textContent.replace(re, '<mark>$1</mark>');
       n.parentNode.replaceChild(span, n);
     });
+  }
+
+  // ── SETTINGS ──
+  const settingsBtn = document.getElementById('settingsBtn');
+  const settingsPanel = document.getElementById('settingsPanel');
+
+  function closeSettings() {
+    settingsPanel.classList.remove('open');
+    settingsBtn.classList.remove('active');
+  }
+
+  settingsBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const isOpen = settingsPanel.classList.toggle('open');
+    settingsBtn.classList.toggle('active', isOpen);
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!settingsPanel.contains(e.target) && e.target !== settingsBtn) closeSettings();
+  });
+
+  // Dark mode toggle
+  document.getElementById('darkModeToggle').addEventListener('change', function() {
+    document.documentElement.style.filter = this.checked ? '' : 'invert(1) hue-rotate(180deg)';
+  });
+
+  // Animation toggle
+  document.getElementById('animToggle').addEventListener('change', function() {
+    const style = document.getElementById('noAnimStyle') || (() => {
+      const s = document.createElement('style');
+      s.id = 'noAnimStyle';
+      document.head.appendChild(s);
+      return s;
+    })();
+    style.textContent = this.checked ? '' : '*, *::before, *::after { animation: none !important; transition: none !important; }';
+  });
+
+  // Noise background toggle
+  document.getElementById('noiseToggle').addEventListener('change', function() {
+    document.body.style.setProperty('--noise-opacity', this.checked ? '.4' : '0');
+    // target the body::before via a style tag
+    const style = document.getElementById('noiseStyle') || (() => {
+      const s = document.createElement('style');
+      s.id = 'noiseStyle';
+      document.head.appendChild(s);
+      return s;
+    })();
+    style.textContent = this.checked ? '' : 'body::before { opacity: 0 !important; }';
+  });
+
+  // Font size
+  function setFontSize(size) {
+    const map = { small: '13px', normal: '16px', large: '19px' };
+    document.documentElement.style.fontSize = map[size];
+    document.querySelectorAll('.font-btn').forEach(b => b.classList.remove('active'));
+    event.target.classList.add('active');
+  }
+
+  // Accent color
+  function setAccent(el) {
+    document.querySelectorAll('.swatch').forEach(s => s.classList.remove('active'));
+    el.classList.add('active');
+    document.documentElement.style.setProperty('--accent', el.dataset.color);
+    document.documentElement.style.setProperty('--accent2', el.dataset.color2);
+    document.documentElement.style.setProperty('--border', el.dataset.color + '38');
   }
 
   searchInput.addEventListener('input', () => {
