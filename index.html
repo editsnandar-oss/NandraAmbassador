@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NandraMv — Bstation Indonesia Ambassador</title>
+<title>NandraMv — Bstation Indonesia Ambassador v1.5</title>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+JP:wght@300;400;700&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -570,6 +570,151 @@
     .cta-group { flex-direction: column; align-items: center; }
     .btn { width: 100%; justify-content: center; }
   }
+
+  /* ── STEPS ── */
+  .steps-wrap { display: flex; flex-direction: column; gap: 0; }
+  .step-item { display: flex; gap: 16px; }
+  .step-left { display: flex; flex-direction: column; align-items: center; flex-shrink: 0; }
+  .step-check {
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    background: var(--card);
+    border: 2px solid rgba(0,198,255,.3);
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    transition: background .25s, border-color .25s, transform .15s;
+    flex-shrink: 0;
+    position: relative;
+  }
+  .step-check:hover { border-color: var(--accent); transform: scale(1.08); }
+  .step-check.done { background: var(--accent); border-color: var(--accent); }
+  .step-num { font-family: 'Bebas Neue', sans-serif; font-size: 1.1rem; color: var(--muted); transition: opacity .2s; }
+  .step-tick { position: absolute; font-size: 1.1rem; color: #fff; opacity: 0; transition: opacity .2s; }
+  .step-check.done .step-num { opacity: 0; }
+  .step-check.done .step-tick { opacity: 1; }
+  .step-line { width: 2px; flex: 1; background: rgba(0,198,255,.15); margin: 6px 0; min-height: 32px; }
+  .step-body { padding-bottom: 28px; padding-top: 10px; flex: 1; }
+  .step-item:last-child .step-body { padding-bottom: 0; }
+  .step-title { font-family: 'Rajdhani', sans-serif; font-weight: 700; font-size: 1.05rem; color: #fff; letter-spacing: .03em; margin-bottom: 6px; transition: color .25s; }
+  .step-item .step-check.done ~ * .step-title, .step-body.done-body .step-title { color: var(--accent); }
+  .step-desc { font-size: .85rem; color: var(--muted); line-height: 1.65; margin-bottom: 10px; }
+  .step-link { display: inline-flex; align-items: center; gap: 6px; font-family: 'Rajdhani', sans-serif; font-weight: 700; font-size: .8rem; letter-spacing: .06em; color: var(--accent); text-decoration: none; border: 1px solid rgba(0,198,255,.25); border-radius: 7px; padding: 5px 12px; transition: background .2s, border-color .2s; }
+  .step-link:hover { background: rgba(0,198,255,.1); border-color: var(--accent); }
+
+  /* ── BOTTOM NAV ── */
+  .bottom-nav {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    z-index: 10000;
+    background: rgba(5,8,16,.92);
+    backdrop-filter: blur(20px);
+    border-top: 1px solid rgba(0,198,255,.12);
+    display: flex;
+    align-items: stretch;
+    height: 58px;
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  .bnav-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    text-decoration: none;
+    color: var(--muted);
+    font-family: 'Rajdhani', sans-serif;
+    font-size: .6rem;
+    font-weight: 700;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    transition: color .2s, background .2s;
+    cursor: pointer;
+    border: none;
+    background: none;
+    padding: 6px 2px;
+    position: relative;
+  }
+  .bnav-item::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 20%; right: 20%;
+    height: 2px;
+    background: var(--accent);
+    border-radius: 0 0 4px 4px;
+    transform: scaleX(0);
+    transition: transform .2s;
+  }
+  .bnav-item.active { color: var(--accent); }
+  .bnav-item.active::after { transform: scaleX(1); }
+  .bnav-item:hover { color: var(--text); background: rgba(0,198,255,.05); }
+  .bnav-icon { font-size: 1.15rem; line-height: 1; }
+  .bnav-label { line-height: 1; }
+  body { padding-bottom: 70px; }
+
+  /* ── SHARE FAB ── */
+  .share-fab {
+    position: fixed;
+    bottom: 72px; right: 18px;
+    z-index: 9990;
+    width: 46px; height: 46px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    border: none;
+    border-radius: 50%;
+    font-size: 1.2rem;
+    cursor: pointer;
+    box-shadow: 0 4px 20px rgba(0,198,255,.4);
+    display: flex; align-items: center; justify-content: center;
+    transition: transform .2s, box-shadow .2s;
+  }
+  .share-fab:hover { transform: scale(1.1); box-shadow: 0 6px 28px rgba(0,198,255,.6); }
+
+  /* ── SHARE MODAL ── */
+  .share-overlay {
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,.6);
+    z-index: 10001;
+    opacity: 0; pointer-events: none;
+    transition: opacity .25s;
+    backdrop-filter: blur(4px);
+  }
+  .share-overlay.open { opacity: 1; pointer-events: all; }
+  .share-modal {
+    position: fixed;
+    bottom: 70px; left: 50%; transform: translateX(-50%) translateY(20px);
+    width: min(360px, calc(100vw - 32px));
+    background: rgba(8,13,24,.98);
+    border: 1px solid rgba(0,198,255,.2);
+    border-radius: 18px;
+    padding: 20px;
+    z-index: 10002;
+    box-shadow: 0 8px 48px rgba(0,0,0,.7);
+    opacity: 0; pointer-events: none;
+    transition: opacity .25s, transform .25s;
+  }
+  .share-modal.open { opacity: 1; pointer-events: all; transform: translateX(-50%) translateY(0); }
+  .share-modal-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+  .share-options { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 14px; }
+  .share-opt {
+    display: flex; flex-direction: column; align-items: center; gap: 6px;
+    background: rgba(0,198,255,.07); border: 1px solid rgba(0,198,255,.15);
+    border-radius: 12px; padding: 12px 6px; cursor: pointer;
+    font-family: 'Rajdhani', sans-serif; font-size: .72rem; font-weight: 700;
+    letter-spacing: .05em; color: var(--text); text-transform: uppercase;
+    transition: background .2s, border-color .2s, transform .15s;
+  }
+  .share-opt:hover { background: rgba(0,198,255,.15); border-color: var(--accent); transform: translateY(-2px); }
+  .share-copy-btn {
+    width: 100%; padding: 11px;
+    background: rgba(0,198,255,.1); border: 1px solid rgba(0,198,255,.3);
+    border-radius: 10px; color: var(--accent);
+    font-family: 'Rajdhani', sans-serif; font-weight: 700; font-size: .9rem;
+    letter-spacing: .08em; cursor: pointer;
+    transition: background .2s, border-color .2s;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+  }
+  .share-copy-btn:hover { background: rgba(0,198,255,.2); border-color: var(--accent); }
+  .share-copy-btn.copied { background: rgba(34,197,94,.15); border-color: #22C55E; color: #22C55E; }
 </style>
 </head>
 <body>
@@ -664,7 +809,116 @@
   </div>
 </div>
 
+<div class="divider"></div>
+
 <section class="reveal">
+  <p class="section-label">&#10067; FAQ</p>
+  <h2 class="section-title">Kenapa Daftar Lewat Ambassador?</h2>
+  <div style="background:var(--card);border:1px solid rgba(255,255,255,.07);border-radius:14px;padding:32px 28px;font-size:.93rem;line-height:1.9;color:#BBBBD0">
+    Pendaftaran dilakukan melalui ambassador karena Bstation memiliki <strong style="color:#fff">program kreator eksklusif</strong>.<br><br>
+    Oleh karena itu, diperlukan proses pendaftaran yang lebih detail agar tim dapat memfilter dan menyeleksi kreator yang sesuai untuk bergabung ke dalam program tersebut.<br><br>
+    Untuk konfirmasi atau informasi tambahan, silakan DM ke Instagram resmi:<br>
+    <a href="https://instagram.com/bstation_creator_id" target="_blank" style="color:var(--pink);font-weight:600">@bstation_creator_id</a>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section id="sec-langkah" class="reveal">
+  <p class="section-label">&#128640; Mulai Dari Sini</p>
+  <h2 class="section-title">Langkah Daftar Kreator</h2>
+  <p style="color:var(--muted);margin-bottom:32px;font-size:.93rem">Ikuti langkah berikut secara urut. Tandai yang sudah kamu selesaikan!</p>
+  <div class="steps-wrap">
+
+    <div class="step-item" data-step="1">
+      <div class="step-left">
+        <div class="step-check" onclick="toggleStep(this)">
+          <span class="step-num">1</span>
+          <span class="step-tick">&#10003;</span>
+        </div>
+        <div class="step-line"></div>
+      </div>
+      <div class="step-body">
+        <div class="step-title">Gabung Grup WhatsApp Kreator</div>
+        <div class="step-desc">Masuk ke grup WA kreator untuk mendapat bimbingan langsung dari admin. Jangan keluar dari grup!</div>
+        <a href="https://chat.whatsapp.com/Dxqa2p81BrOGp5aEvQB4cX" target="_blank" class="step-link">&#128154; Gabung Sekarang &#8594;</a>
+      </div>
+    </div>
+
+    <div class="step-item" data-step="2">
+      <div class="step-left">
+        <div class="step-check" onclick="toggleStep(this)">
+          <span class="step-num">2</span>
+          <span class="step-tick">&#10003;</span>
+        </div>
+        <div class="step-line"></div>
+      </div>
+      <div class="step-body">
+        <div class="step-title">Tonton Tutorial Pendaftaran</div>
+        <div class="step-desc">Pahami alur dan syarat lengkapnya dulu sebelum mulai membuat konten. Jangan skip!</div>
+        <a href="https://youtu.be/tG_OJqQkyhw?si=9ryaS-TS10DYdGO0" target="_blank" class="step-link">&#127909; Tonton Tutorial &#8594;</a>
+      </div>
+    </div>
+
+    <div class="step-item" data-step="3">
+      <div class="step-left">
+        <div class="step-check" onclick="toggleStep(this)">
+          <span class="step-num">3</span>
+          <span class="step-tick">&#10003;</span>
+        </div>
+        <div class="step-line"></div>
+      </div>
+      <div class="step-body">
+        <div class="step-title">Buat 4 Video Konten Original</div>
+        <div class="step-desc">Pilih 1 kategori konten (Drawing, AMV, Dubbing, dll). Buat 4 video minimal 720p, usahakan 1–2 video per hari. Konten wajib original!</div>
+        <a href="#sec-konten" class="step-link" onclick="smoothNav(event,'sec-konten')">&#127916; Lihat Pilihan Kategori &#8594;</a>
+      </div>
+    </div>
+
+    <div class="step-item" data-step="4">
+      <div class="step-left">
+        <div class="step-check" onclick="toggleStep(this)">
+          <span class="step-num">4</span>
+          <span class="step-tick">&#10003;</span>
+        </div>
+        <div class="step-line"></div>
+      </div>
+      <div class="step-body">
+        <div class="step-title">Upload ke Bstation &amp; Lapor Admin</div>
+        <div class="step-desc">Setelah 4 video selesai, upload ke Bstation lalu langsung chat admin di grup WA. Admin akan cek dan bantu proses pendaftaran resmi.</div>
+        <a href="https://www.bilibili.tv/id" target="_blank" class="step-link">&#127760; Buka Bstation &#8594;</a>
+      </div>
+    </div>
+
+    <div class="step-item" data-step="5" style="--step-last:1">
+      <div class="step-left">
+        <div class="step-check" onclick="toggleStep(this)">
+          <span class="step-num">5</span>
+          <span class="step-tick">&#10003;</span>
+        </div>
+      </div>
+      <div class="step-body">
+        <div class="step-title">Daftar Resmi &amp; Mulai Dapat Reward! &#127881;</div>
+        <div class="step-desc">Admin akan memandu proses pendaftaran resmi. Setelah lolos, kamu resmi jadi Kreator Bstation dan bisa mulai dapat reward bulanan!</div>
+        <a href="https://rsbcreatormanager.com/form?ref=BAA11DF3" target="_blank" class="step-link" style="color:#FF4B8B;border-color:rgba(255,75,139,.3)">&#128221; Isi Form Pendaftaran &#8594;</a>
+      </div>
+    </div>
+
+  </div>
+  <div id="steps-progress" style="display:none;margin-top:24px;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px 20px;">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
+      <span style="font-family:'Rajdhani',sans-serif;font-weight:700;font-size:.88rem;letter-spacing:.05em;color:var(--text);">Progress Kamu</span>
+      <span id="steps-count" style="font-family:'Rajdhani',sans-serif;font-weight:700;font-size:.88rem;color:var(--accent);">0 / 5</span>
+    </div>
+    <div style="height:6px;background:rgba(255,255,255,.07);border-radius:999px;overflow:hidden;">
+      <div id="steps-bar" style="height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:999px;width:0%;transition:width .4s ease;"></div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section id="sec-keuntungan" class="reveal">
   <p class="section-label">&#10024; Keuntungan</p>
   <h2 class="section-title">Kenapa Jadi Kreator Bstation?</h2>
   <div class="benefits">
@@ -703,7 +957,7 @@
 
 <div class="divider"></div>
 
-<section class="reveal">
+<section id="sec-syarat" class="reveal">
   <p class="section-label">&#128203; Syarat</p>
   <h2 class="section-title">Syarat Pendaftaran</h2>
   <ul class="req-list">
@@ -737,7 +991,7 @@
 
 <div class="divider"></div>
 
-<section class="reveal">
+<section id="sec-konten" class="reveal">
   <p class="section-label">&#127916; Konten</p>
   <h2 class="section-title">Pilihan Kategori Konten</h2>
   <p style="color:var(--muted);margin-bottom:28px;font-size:.93rem">Cukup pilih <strong style="color:#fff">salah satu</strong> kategori berikut. Semua kategori durasi minimal 1&ndash;20 menit (kecuali AMV).</p>
@@ -806,7 +1060,7 @@
 
 <div class="divider"></div>
 
-<section class="reveal">
+<section id="sec-reward" class="reveal">
   <p class="section-label">&#127885; Reward</p>
   <h2 class="section-title">Sistem Reward</h2>
   <p style="color:var(--muted);margin-bottom:28px;font-size:.93rem">Sistem reward bukan gajian &mdash; ini adalah <strong style="color:#fff">kompetisi</strong> dengan kreator lain. Jadi, rajin adalah kuncinya!</p>
@@ -841,7 +1095,7 @@
 
 <div class="divider"></div>
 
-<section class="reveal">
+<section id="sec-event" class="reveal">
   <p class="section-label">&#127881; Event</p>
   <h2 class="section-title">Event Bstation</h2>
   <p style="color:var(--muted);margin-bottom:28px;font-size:.93rem">Bstation sering ngadain event kompetisi khusus kreator &mdash; kesempatan tambahan untuk dapat reward lebih banyak, bahkan dalam bentuk <strong style="color:var(--accent)">dollar</strong>! Berikut event yang sudah saya ikuti dan berhasil dapat reward:</p>
@@ -891,7 +1145,7 @@
 
 <div class="divider"></div>
 
-<section class="reveal">
+<section id="sec-tutorial" class="reveal">
   <p class="section-label">&#127916; Tutorial</p>
   <h2 class="section-title">Tutorial Daftar Jadi Kreator Bstation</h2>
   <p style="color:var(--muted);margin-bottom:28px;font-size:.93rem">Bingung cara daftarnya? Tenang! Saya sudah buatin tutorial lengkap step-by-step. Tonton videonya dulu sebelum mulai!</p>
@@ -924,19 +1178,6 @@
   </div>
 </section>
 
-<div class="divider"></div>
-
-<section class="reveal">
-  <p class="section-label">&#10067; FAQ</p>
-  <h2 class="section-title">Kenapa Daftar Lewat Ambassador?</h2>
-  <div style="background:var(--card);border:1px solid rgba(255,255,255,.07);border-radius:14px;padding:32px 28px;font-size:.93rem;line-height:1.9;color:#BBBBD0">
-    Pendaftaran dilakukan melalui ambassador karena Bstation memiliki <strong style="color:#fff">program kreator eksklusif</strong>.<br><br>
-    Oleh karena itu, diperlukan proses pendaftaran yang lebih detail agar tim dapat memfilter dan menyeleksi kreator yang sesuai untuk bergabung ke dalam program tersebut.<br><br>
-    Untuk konfirmasi atau informasi tambahan, silakan DM ke Instagram resmi:<br>
-    <a href="https://instagram.com/bstation_creator_id" target="_blank" style="color:var(--pink);font-weight:600">@bstation_creator_id</a>
-  </div>
-</section>
-
 <div class="contact-section reveal">
   <h2>Siap Bergabung? &#128640;</h2>
   <p>Hubungi saya langsung atau join grup untuk mulai perjalananmu sebagai Kreator Bstation!</p>
@@ -964,7 +1205,7 @@
 </footer>
 
 <script>
-  // Scroll reveal
+  // ── SCROLL REVEAL ──
   const reveals = document.querySelectorAll('.reveal');
   const io = new IntersectionObserver((entries) => {
     entries.forEach(e => {
@@ -973,12 +1214,11 @@
   }, { threshold: 0.1 });
   reveals.forEach(el => io.observe(el));
 
-  // Search
+  // ── SEARCH ──
   const searchInput = document.getElementById('searchInput');
   const searchClear = document.getElementById('searchClear');
   const searchCount = document.getElementById('searchCount');
   const allItems = document.querySelectorAll('[data-searchable]');
-
   allItems.forEach(el => { el._originalHTML = el.innerHTML; });
 
   function clearSearch() {
@@ -986,11 +1226,7 @@
     searchInput.dispatchEvent(new Event('input'));
     searchInput.focus();
   }
-
-  function escapeRegex(str) {
-    return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-  }
-
+  function escapeRegex(str) { return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }
   function highlight(el, query) {
     el.innerHTML = el._originalHTML;
     if (!query) return;
@@ -1006,72 +1242,6 @@
       n.parentNode.replaceChild(span, n);
     });
   }
-
-  // ── SETTINGS ──
-  const settingsBtn = document.getElementById('settingsBtn');
-  const settingsPanel = document.getElementById('settingsPanel');
-
-  function closeSettings() {
-    settingsPanel.classList.remove('open');
-    settingsBtn.classList.remove('active');
-  }
-
-  settingsBtn.addEventListener('click', (e) => {
-    e.stopPropagation();
-    const isOpen = settingsPanel.classList.toggle('open');
-    settingsBtn.classList.toggle('active', isOpen);
-  });
-
-  document.addEventListener('click', (e) => {
-    if (!settingsPanel.contains(e.target) && e.target !== settingsBtn) closeSettings();
-  });
-
-  // Dark mode toggle
-  document.getElementById('darkModeToggle').addEventListener('change', function() {
-    document.documentElement.style.filter = this.checked ? '' : 'invert(1) hue-rotate(180deg)';
-  });
-
-  // Animation toggle
-  document.getElementById('animToggle').addEventListener('change', function() {
-    const style = document.getElementById('noAnimStyle') || (() => {
-      const s = document.createElement('style');
-      s.id = 'noAnimStyle';
-      document.head.appendChild(s);
-      return s;
-    })();
-    style.textContent = this.checked ? '' : '*, *::before, *::after { animation: none !important; transition: none !important; }';
-  });
-
-  // Noise background toggle
-  document.getElementById('noiseToggle').addEventListener('change', function() {
-    document.body.style.setProperty('--noise-opacity', this.checked ? '.4' : '0');
-    // target the body::before via a style tag
-    const style = document.getElementById('noiseStyle') || (() => {
-      const s = document.createElement('style');
-      s.id = 'noiseStyle';
-      document.head.appendChild(s);
-      return s;
-    })();
-    style.textContent = this.checked ? '' : 'body::before { opacity: 0 !important; }';
-  });
-
-  // Font size
-  function setFontSize(size) {
-    const map = { small: '13px', normal: '16px', large: '19px' };
-    document.documentElement.style.fontSize = map[size];
-    document.querySelectorAll('.font-btn').forEach(b => b.classList.remove('active'));
-    event.target.classList.add('active');
-  }
-
-  // Accent color
-  function setAccent(el) {
-    document.querySelectorAll('.swatch').forEach(s => s.classList.remove('active'));
-    el.classList.add('active');
-    document.documentElement.style.setProperty('--accent', el.dataset.color);
-    document.documentElement.style.setProperty('--accent2', el.dataset.color2);
-    document.documentElement.style.setProperty('--border', el.dataset.color + '38');
-  }
-
   searchInput.addEventListener('input', () => {
     const q = searchInput.value.trim().toLowerCase();
     searchClear.classList.toggle('visible', q.length > 0);
@@ -1090,6 +1260,232 @@
       if (first) first.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
   });
+
+  // ── SETTINGS ──
+  const settingsBtn = document.getElementById('settingsBtn');
+  const settingsPanel = document.getElementById('settingsPanel');
+  function closeSettings() {
+    settingsPanel.classList.remove('open');
+    settingsBtn.classList.remove('active');
+  }
+  settingsBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const isOpen = settingsPanel.classList.toggle('open');
+    settingsBtn.classList.toggle('active', isOpen);
+  });
+  document.addEventListener('click', (e) => {
+    if (!settingsPanel.contains(e.target) && e.target !== settingsBtn) closeSettings();
+  });
+  document.getElementById('darkModeToggle').addEventListener('change', function() {
+    document.documentElement.style.filter = this.checked ? '' : 'invert(1) hue-rotate(180deg)';
+  });
+  document.getElementById('animToggle').addEventListener('change', function() {
+    const style = document.getElementById('noAnimStyle') || (() => {
+      const s = document.createElement('style'); s.id = 'noAnimStyle'; document.head.appendChild(s); return s;
+    })();
+    style.textContent = this.checked ? '' : '*, *::before, *::after { animation: none !important; transition: none !important; }';
+  });
+  document.getElementById('noiseToggle').addEventListener('change', function() {
+    const style = document.getElementById('noiseStyle') || (() => {
+      const s = document.createElement('style'); s.id = 'noiseStyle'; document.head.appendChild(s); return s;
+    })();
+    style.textContent = this.checked ? '' : 'body::before { opacity: 0 !important; }';
+  });
+  function setFontSize(size) {
+    const map = { small: '13px', normal: '16px', large: '19px' };
+    document.documentElement.style.fontSize = map[size];
+    document.querySelectorAll('.font-btn').forEach(b => b.classList.remove('active'));
+    event.target.classList.add('active');
+  }
+  function setAccent(el) {
+    document.querySelectorAll('.swatch').forEach(s => s.classList.remove('active'));
+    el.classList.add('active');
+    document.documentElement.style.setProperty('--accent', el.dataset.color);
+    document.documentElement.style.setProperty('--accent2', el.dataset.color2);
+    document.documentElement.style.setProperty('--border', el.dataset.color + '38');
+  }
+
+  // ── BOTTOM NAV: smoothNav + active highlight ──
+  function smoothNav(e, id) {
+    e.preventDefault();
+    const target = id === 'hero-top' ? document.body : document.getElementById(id);
+    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    document.querySelectorAll('.bnav-item').forEach(a => a.classList.remove('active'));
+    e.currentTarget.classList.add('active');
+  }
+
+  // Highlight active nav item on scroll
+  const navSections = [
+    { id: 'hero-top', el: document.querySelector('.hero') },
+    { id: 'sec-langkah', el: document.getElementById('sec-langkah') },
+    { id: 'sec-syarat', el: document.getElementById('sec-syarat') },
+    { id: 'sec-reward', el: document.getElementById('sec-reward') },
+    { id: 'sec-event', el: document.getElementById('sec-event') },
+    { id: 'sec-tutorial', el: document.getElementById('sec-tutorial') },
+  ];
+  const bnavItems = document.querySelectorAll('.bnav-item');
+  window.addEventListener('scroll', () => {
+    let current = 'hero-top';
+    navSections.forEach(s => {
+      if (s.el && window.scrollY >= s.el.offsetTop - 120) current = s.id;
+    });
+    bnavItems.forEach(a => {
+      a.classList.toggle('active', a.getAttribute('data-nav') === current);
+    });
+  }, { passive: true });
+
+  // ── STEPS CHECKLIST ──
+  const stepsProgressBar = document.getElementById('steps-bar');
+  const stepsCount = document.getElementById('steps-count');
+  const stepsProgressWrap = document.getElementById('steps-progress');
+  const TOTAL_STEPS = 5;
+
+  function toggleStep(checkEl) {
+    checkEl.classList.toggle('done');
+    const body = checkEl.closest('.step-item').querySelector('.step-body');
+    if (body) body.classList.toggle('done-body', checkEl.classList.contains('done'));
+    updateProgress();
+  }
+
+  function updateProgress() {
+    const done = document.querySelectorAll('.step-check.done').length;
+    stepsProgressWrap.style.display = done > 0 ? 'block' : 'none';
+    stepsCount.textContent = done + ' / ' + TOTAL_STEPS;
+    stepsProgressBar.style.width = (done / TOTAL_STEPS * 100) + '%';
+    if (done === TOTAL_STEPS) {
+      stepsProgressBar.style.background = 'linear-gradient(90deg,#22C55E,#16A34A)';
+      stepsCount.style.color = '#22C55E';
+    } else {
+      stepsProgressBar.style.background = 'linear-gradient(90deg,var(--accent),var(--accent2))';
+      stepsCount.style.color = 'var(--accent)';
+    }
+  }
+
+  // ── SHARE ──
+  const shareOverlay = document.getElementById('shareOverlay');
+  const shareModal = document.getElementById('shareModal');
+
+  function openShare() {
+    shareOverlay.classList.add('open');
+    shareModal.classList.add('open');
+  }
+  function closeShare() {
+    shareOverlay.classList.remove('open');
+    shareModal.classList.remove('open');
+  }
+
+  const PAGE_URL = window.location.href;
+  const PAGE_TITLE = 'Daftar Kreator Bstation — Gratis & Dapat Reward! 🎉';
+  const PAGE_TEXT = 'Hai! Mau jadi Kreator Bstation dan dapat reward bulanan? Daftar sekarang lewat link ini (100% GRATIS):';
+
+  function shareWA() {
+    const text = encodeURIComponent(PAGE_TEXT + '\n' + PAGE_URL);
+    window.open('https://wa.me/?text=' + text, '_blank');
+    closeShare();
+  }
+  function shareIG() {
+    // Instagram doesn't support direct link share — copy link instead
+    copyLink();
+    alert('Link sudah disalin! Tempel ke bio atau Story Instagram kamu 📸');
+  }
+  function shareTG() {
+    const text = encodeURIComponent(PAGE_TEXT);
+    const url = encodeURIComponent(PAGE_URL);
+    window.open('https://t.me/share/url?url=' + url + '&text=' + text, '_blank');
+    closeShare();
+  }
+  function shareX() {
+    const text = encodeURIComponent(PAGE_TEXT + ' ' + PAGE_URL + ' #Bstation #Kreator');
+    window.open('https://x.com/intent/tweet?text=' + text, '_blank');
+    closeShare();
+  }
+  function copyLink() {
+    const btn = document.getElementById('shareCopyBtn');
+    const icon = document.getElementById('shareCopyIcon');
+    navigator.clipboard.writeText(PAGE_URL).then(() => {
+      btn.classList.add('copied');
+      icon.textContent = '✅';
+      btn.childNodes[1].textContent = ' Link Tersalin!';
+      setTimeout(() => {
+        btn.classList.remove('copied');
+        icon.textContent = '📋';
+        btn.childNodes[1].textContent = ' Salin Link';
+      }, 2200);
+    });
+  }
+
+  // ── NATIVE SHARE (if supported) ──
+  const shareFab = document.getElementById('shareBtn');
+  if (navigator.share) {
+    shareFab.addEventListener('click', (e) => {
+      e.preventDefault();
+      navigator.share({ title: PAGE_TITLE, text: PAGE_TEXT, url: PAGE_URL }).catch(() => {});
+    });
+  }
+  // else onclick="openShare()" stays as fallback (already in HTML)
 </script>
+
+<!-- BOTTOM NAVBAR -->
+<nav class="bottom-nav" id="bottomNav">
+  <a class="bnav-item active" href="#" data-nav="hero-top" onclick="smoothNav(event,'hero-top')">
+    <span class="bnav-icon">&#127968;</span>
+    <span class="bnav-label">Home</span>
+  </a>
+  <a class="bnav-item" href="#sec-langkah" data-nav="sec-langkah" onclick="smoothNav(event,'sec-langkah')">
+    <span class="bnav-icon">&#128640;</span>
+    <span class="bnav-label">Langkah</span>
+  </a>
+  <a class="bnav-item" href="#sec-syarat" data-nav="sec-syarat" onclick="smoothNav(event,'sec-syarat')">
+    <span class="bnav-icon">&#128203;</span>
+    <span class="bnav-label">Syarat</span>
+  </a>
+  <a class="bnav-item" href="#sec-reward" data-nav="sec-reward" onclick="smoothNav(event,'sec-reward')">
+    <span class="bnav-icon">&#127885;</span>
+    <span class="bnav-label">Reward</span>
+  </a>
+  <a class="bnav-item" href="#sec-event" data-nav="sec-event" onclick="smoothNav(event,'sec-event')">
+    <span class="bnav-icon">&#127881;</span>
+    <span class="bnav-label">Event</span>
+  </a>
+  <a class="bnav-item" href="#sec-tutorial" data-nav="sec-tutorial" onclick="smoothNav(event,'sec-tutorial')">
+    <span class="bnav-icon">&#127909;</span>
+    <span class="bnav-label">Tutorial</span>
+  </a>
+</nav>
+
+<!-- SHARE FAB -->
+<button class="share-fab" id="shareBtn" onclick="openShare()" title="Bagikan halaman ini">&#128279;</button>
+
+<!-- SHARE MODAL -->
+<div class="share-overlay" id="shareOverlay" onclick="closeShare()"></div>
+<div class="share-modal" id="shareModal">
+  <div class="share-modal-header">
+    <span style="font-family:'Rajdhani',sans-serif;font-size:.72rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);">&#128279; Bagikan Halaman Ini</span>
+    <button onclick="closeShare()" style="background:none;border:none;color:var(--muted);font-size:1.2rem;cursor:pointer;padding:2px 6px;border-radius:6px;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='var(--muted)'">&#10005;</button>
+  </div>
+  <p style="font-size:.82rem;color:var(--muted);margin-bottom:16px;line-height:1.6;">Ajak teman kamu bergabung jadi Kreator Bstation!</p>
+  <div class="share-options">
+    <button class="share-opt" onclick="shareWA()">
+      <span style="font-size:1.5rem;">&#128242;</span>
+      <span>WhatsApp</span>
+    </button>
+    <button class="share-opt" onclick="shareIG()">
+      <span style="font-size:1.5rem;">&#128247;</span>
+      <span>Instagram</span>
+    </button>
+    <button class="share-opt" onclick="shareTG()">
+      <span style="font-size:1.5rem;">&#128248;</span>
+      <span>Telegram</span>
+    </button>
+    <button class="share-opt" onclick="shareX()">
+      <span style="font-size:1.5rem;">&#10006;</span>
+      <span>X / Twitter</span>
+    </button>
+  </div>
+  <button class="share-copy-btn" id="shareCopyBtn" onclick="copyLink()">
+    <span id="shareCopyIcon">&#128203;</span> Salin Link
+  </button>
+</div>
+
 </body>
 </html>
