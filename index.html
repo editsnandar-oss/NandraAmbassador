@@ -714,6 +714,84 @@
   }
   .share-copy-btn:hover { background: rgba(0,198,255,.2); border-color: var(--accent); }
   .share-copy-btn.copied { background: rgba(34,197,94,.15); border-color: #22C55E; color: #22C55E; }
+
+  /* ── FAQ ACCORDION ── */
+  .faq-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .faq-item {
+    background: var(--card);
+    border: 1px solid rgba(0,198,255,.12);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: border-color .25s;
+  }
+  .faq-item.open {
+    border-color: rgba(0,198,255,.45);
+  }
+  .faq-q {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    padding: 18px 22px;
+    background: none;
+    border: none;
+    color: var(--text);
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: .03em;
+    text-align: left;
+    cursor: pointer;
+    transition: color .2s, background .2s;
+  }
+  .faq-q:hover {
+    color: #fff;
+    background: rgba(0,198,255,.04);
+  }
+  .faq-item.open .faq-q {
+    color: var(--accent);
+  }
+  .faq-chevron {
+    flex-shrink: 0;
+    color: var(--muted);
+    transition: transform .3s ease, color .2s;
+    display: flex;
+    align-items: center;
+  }
+  .faq-item.open .faq-chevron {
+    transform: rotate(180deg);
+    color: var(--accent);
+  }
+  .faq-a {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows .32s ease;
+  }
+  .faq-item.open .faq-a {
+    grid-template-rows: 1fr;
+  }
+  .faq-a-inner {
+    overflow: hidden;
+    font-size: .9rem;
+    line-height: 1.8;
+    color: #9DAFC8;
+    padding: 0 22px;
+    transition: padding .32s ease;
+  }
+  .faq-item.open .faq-a-inner {
+    padding: 0 22px 20px;
+  }
+  .faq-a-inner a {
+    text-decoration: none;
+  }
+  .faq-a-inner a:hover {
+    text-decoration: underline;
+  }
 </style>
 </head>
 <body>
@@ -818,14 +896,83 @@
 
 <div class="divider"></div>
 
-<section class="reveal">
+<section id="sec-faq" class="reveal">
   <p class="section-label" style="display:flex;align-items:center;gap:6px;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> FAQ</p>
-  <h2 class="section-title">Kenapa Daftar Lewat Ambassador?</h2>
-  <div style="background:var(--card);border:1px solid rgba(255,255,255,.07);border-radius:14px;padding:32px 28px;font-size:.93rem;line-height:1.9;color:#BBBBD0">
-    Pendaftaran dilakukan melalui ambassador karena Bstation memiliki <strong style="color:#fff">program kreator eksklusif</strong>.<br><br>
-    Oleh karena itu, diperlukan proses pendaftaran yang lebih detail agar tim dapat memfilter dan menyeleksi kreator yang sesuai untuk bergabung ke dalam program tersebut.<br><br>
-    Untuk konfirmasi atau informasi tambahan, silakan DM ke Instagram resmi:<br>
-    <a href="https://instagram.com/bstation_creator_id" target="_blank" style="color:var(--pink);font-weight:600">@bstation_creator_id</a>
+  <h2 class="section-title">Pertanyaan Umum</h2>
+  <div class="faq-list">
+
+    <div class="faq-item" data-searchable>
+      <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false">
+        <span>Kenapa harus daftar lewat ambassador?</span>
+        <span class="faq-chevron"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></span>
+      </button>
+      <div class="faq-a">
+        <div class="faq-a-inner">
+          Pendaftaran dilakukan melalui ambassador karena Bstation memiliki <strong style="color:#fff">program kreator eksklusif</strong>. Diperlukan proses yang lebih detail agar tim dapat memfilter dan menyeleksi kreator yang sesuai. Untuk konfirmasi, silakan DM Instagram resmi: <a href="https://instagram.com/bstation_creator_id" target="_blank" style="color:var(--accent);font-weight:600">@bstation_creator_id</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item" data-searchable>
+      <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false">
+        <span>Apakah pendaftaran berbayar?</span>
+        <span class="faq-chevron"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></span>
+      </button>
+      <div class="faq-a">
+        <div class="faq-a-inner">
+          <strong style="color:#22C55E">100% GRATIS.</strong> Tidak ada biaya apapun untuk daftar jadi kreator Bstation. Seluruh proses pendaftaran dan bimbingan dari admin tidak dipungut biaya. Jika ada yang meminta bayaran atas nama program ini, segera laporkan!
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item" data-searchable>
+      <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false">
+        <span>Berapa lama proses review setelah 4 video selesai?</span>
+        <span class="faq-chevron"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></span>
+      </button>
+      <div class="faq-a">
+        <div class="faq-a-inner">
+          Proses review bervariasi tergantung antrean tim Bstation. Tips untuk mempercepat: buat <strong style="color:#fff">1–2 video per hari</strong> saat pengerjaan, dan langsung hubungi admin setelah semua video selesai. Admin akan membantu memandu proses daftar resminya.
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item" data-searchable>
+      <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false">
+        <span>Apakah konten saya tetap jadi milik saya?</span>
+        <span class="faq-chevron"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></span>
+      </button>
+      <div class="faq-a">
+        <div class="faq-a-inner">
+          Ya! Hak kepemilikan konten <strong style="color:#fff">100% tetap milik kreator</strong>. Bstation hanya menjadi platform tempat kamu mendistribusikan konten dan mendapatkan reward — bukan mengklaim kontenmu.
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item" data-searchable>
+      <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false">
+        <span>Boleh upload konten dari YouTube atau platform lain?</span>
+        <span class="faq-chevron"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></span>
+      </button>
+      <div class="faq-a">
+        <div class="faq-a-inner">
+          <strong style="color:#FF4B8B">Tidak boleh.</strong> Semua konten wajib <strong style="color:#fff">original</strong> — bukan reupload dari platform lain. Tim review Bstation secara aktif memeriksa orisinalitas konten. Konten yang terdeteksi sebagai reupload akan ditolak atau dimoderasi.
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item" data-searchable>
+      <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false">
+        <span>Kapan reward cair dan bagaimana cara menerimanya?</span>
+        <span class="faq-chevron"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></span>
+      </button>
+      <div class="faq-a">
+        <div class="faq-a-inner">
+          Reward mingguan (Weekly) diumumkan lewat <strong style="color:#fff">Instagram</strong> dan grup kreator. Reward bulanan (MAC) dihitung dari konsistensi konten selama satu periode penuh. Mekanisme pencairan akan diinformasikan oleh admin setelah kamu resmi jadi kreator.
+        </div>
+      </div>
+    </div>
+
   </div>
 </section>
 
@@ -1381,6 +1528,7 @@
   // Highlight active nav item on scroll
   const navSections = [
     { id: 'hero-top', el: document.querySelector('.hero') },
+    { id: 'sec-faq', el: document.getElementById('sec-faq') },
     { id: 'sec-langkah', el: document.getElementById('sec-langkah') },
     { id: 'sec-syarat', el: document.getElementById('sec-syarat') },
     { id: 'sec-reward', el: document.getElementById('sec-reward') },
@@ -1422,6 +1570,22 @@
     } else {
       stepsProgressBar.style.background = 'linear-gradient(90deg,var(--accent),var(--accent2))';
       stepsCount.style.color = 'var(--accent)';
+    }
+  }
+
+  // ── FAQ ACCORDION ──
+  function toggleFaq(btn) {
+    const item = btn.closest('.faq-item');
+    const isOpen = item.classList.contains('open');
+    // Close all others
+    document.querySelectorAll('.faq-item.open').forEach(el => {
+      el.classList.remove('open');
+      el.querySelector('.faq-q').setAttribute('aria-expanded', 'false');
+    });
+    // Toggle clicked
+    if (!isOpen) {
+      item.classList.add('open');
+      btn.setAttribute('aria-expanded', 'true');
     }
   }
 
