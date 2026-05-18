@@ -4,6 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>NandraMv — Bstation Indonesia Ambassador v1.5</title>
+<!-- Open Graph -->
+<meta property="og:title" content="NandraMv — Bstation Indonesia Ambassador">
+<meta property="og:description" content="Halaman resmi NandraMv sebagai Bstation Indonesia Ambassador. Temukan konten anime, gaming, dan komunitas Jepang terbaik bersama kami.">
+<meta property="og:image" content="https://i.ibb.co/placeholder/bstation-og-image.jpg">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+JP:wght@300;400;700&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -792,11 +796,6 @@
   .faq-a-inner a:hover {
     text-decoration: underline;
   }
-
-  /* ── PREVIEW SECTION ── */
-  #sec-preview > div:hover .preview-hover-overlay {
-    opacity: 1 !important;
-  }
 </style>
 </head>
 <body>
@@ -898,129 +897,6 @@
     <div class="scroll-line"></div>
   </div>
 </div>
-
-<!-- PREVIEW WEB SECTION -->
-<div class="divider"></div>
-<section id="sec-preview" style="padding: 60px 24px; max-width: 900px; margin: 0 auto; text-align: center;">
-  <p class="section-label" style="display:flex;align-items:center;justify-content:center;gap:6px;">
-    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
-    Preview
-  </p>
-  <h2 class="section-title" style="margin-bottom: 20px;">Tampilan Halaman Ini</h2>
-  <p style="color: var(--muted); font-size: .9rem; margin-bottom: 32px; line-height: 1.7;">
-    Berikut preview tampilan halaman ambassador ini. Klik gambar untuk melihat ukuran penuh.
-  </p>
-  <div style="
-    position: relative;
-    border-radius: 16px;
-    overflow: hidden;
-    border: 1px solid rgba(0,198,255,.25);
-    box-shadow: 0 8px 48px rgba(0,0,0,.5), 0 0 0 1px rgba(0,198,255,.08);
-    transition: transform .3s, box-shadow .3s;
-    display: inline-block;
-    width: 100%;
-    max-width: 800px;
-    cursor: pointer;
-  " onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='0 16px 64px rgba(0,0,0,.6), 0 0 0 1px rgba(0,198,255,.2)'" onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='0 8px 48px rgba(0,0,0,.5), 0 0 0 1px rgba(0,198,255,.08)'" onclick="window.open('https://ibb.co.com/gbm6c5Rj','_blank')">
-    <!-- Top bar mockup browser chrome -->
-    <div style="
-      background: rgba(8,13,24,.97);
-      border-bottom: 1px solid rgba(0,198,255,.15);
-      padding: 10px 16px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    ">
-      <div style="display:flex;gap:6px;">
-        <span style="width:11px;height:11px;border-radius:50%;background:#FF5F57;display:inline-block;"></span>
-        <span style="width:11px;height:11px;border-radius:50%;background:#FFBD2E;display:inline-block;"></span>
-        <span style="width:11px;height:11px;border-radius:50%;background:#28C840;display:inline-block;"></span>
-      </div>
-      <div style="
-        flex: 1;
-        background: rgba(0,198,255,.07);
-        border: 1px solid rgba(0,198,255,.15);
-        border-radius: 6px;
-        padding: 5px 14px;
-        font-family: 'Rajdhani', sans-serif;
-        font-size: .72rem;
-        color: var(--muted);
-        letter-spacing: .04em;
-        text-align: left;
-        display: flex;
-        align-items: center;
-        gap: 7px;
-      ">
-        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-        nandramv.bstation.ambassador
-      </div>
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--muted);flex-shrink:0;"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-    </div>
-    <!-- Preview Image -->
-    <img
-      src="https://i.ibb.co.com/gbm6c5Rj"
-      alt="Preview Halaman Bstation Ambassador NandraMv"
-      style="
-        width: 100%;
-        display: block;
-        object-fit: cover;
-        max-height: 520px;
-      "
-      onerror="this.parentElement.parentElement.querySelector('.preview-fallback').style.display='flex'; this.style.display='none';"
-    >
-    <!-- Fallback jika gambar gagal load -->
-    <div class="preview-fallback" style="
-      display: none;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-      gap: 14px;
-      padding: 60px 24px;
-      background: var(--card);
-      color: var(--muted);
-      font-family: 'Rajdhani', sans-serif;
-      font-size: .9rem;
-      letter-spacing: .05em;
-    ">
-      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="opacity:.4"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-      <span>Klik untuk lihat preview di ibb.co</span>
-    </div>
-    <!-- Hover overlay -->
-    <div style="
-      position: absolute;
-      inset: 0;
-      background: rgba(0,198,255,.04);
-      opacity: 0;
-      transition: opacity .25s;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      pointer-events: none;
-    " class="preview-hover-overlay">
-      <div style="
-        background: rgba(0,198,255,.18);
-        border: 1px solid rgba(0,198,255,.5);
-        border-radius: 8px;
-        padding: 8px 18px;
-        font-family: 'Rajdhani', sans-serif;
-        font-weight: 700;
-        font-size: .82rem;
-        letter-spacing: .08em;
-        color: var(--accent);
-        display: flex;
-        align-items: center;
-        gap: 7px;
-      ">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-        Lihat Ukuran Penuh
-      </div>
-    </div>
-  </div>
-  <p style="margin-top: 16px; font-size: .78rem; color: var(--muted); font-family: 'Rajdhani', sans-serif; letter-spacing: .06em;">
-    Klik gambar untuk melihat preview lengkap &rarr;
-    <a href="https://ibb.co.com/gbm6c5Rj" target="_blank" style="color: var(--accent); text-decoration: none; margin-left: 4px;">ibb.co/gbm6c5Rj</a>
-  </p>
-</section>
 
 <div class="divider"></div>
 
