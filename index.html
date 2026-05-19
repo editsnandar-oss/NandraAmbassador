@@ -3,11 +3,26 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NandraMv — Bstation Indonesia Ambassador v2.0</title>
+<title>NandraMv — Bstation Indonesia Ambassador v1.5</title>
 <!-- Open Graph -->
+<meta property="og:type" content="website">
 <meta property="og:title" content="NandraMv — Bstation Indonesia Ambassador">
 <meta property="og:description" content="Halaman resmi NandraMv sebagai Bstation Indonesia Ambassador. Temukan konten anime, gaming, dan komunitas Jepang terbaik bersama kami.">
 <meta property="og:image" content="https://i.ibb.co/placeholder/bstation-og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="NandraMv — Bstation Indonesia Ambassador">
+<meta property="og:url" content="">
+<meta property="og:site_name" content="NandraMv Bstation Ambassador">
+<meta property="og:locale" content="id_ID">
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="NandraMv — Bstation Indonesia Ambassador">
+<meta name="twitter:description" content="Halaman resmi NandraMv sebagai Bstation Indonesia Ambassador. Temukan konten anime, gaming, dan komunitas Jepang terbaik bersama kami.">
+<meta name="twitter:image" content="https://i.ibb.co/placeholder/bstation-og-image.jpg">
+<meta name="twitter:image:alt" content="NandraMv — Bstation Indonesia Ambassador">
+<!-- SEO General -->
+<meta name="description" content="Halaman resmi NandraMv sebagai Bstation Indonesia Ambassador. Temukan konten anime, gaming, dan komunitas Jepang terbaik bersama kami.">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+JP:wght@300;400;700&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -19,6 +34,8 @@
     --border: rgba(0,198,255,0.22);
     --text: #E0EFFF;
     --muted: #5577AA;
+    --pink: #FF4B8B;
+    --blue: #0077FF;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   html { scroll-behavior: smooth; }
@@ -1005,9 +1022,9 @@
   <div class="settings-section">
     <div class="settings-section-label">Ukuran Teks</div>
     <div class="font-btns">
-      <button class="font-btn" onclick="setFontSize('small')">Kecil</button>
-      <button class="font-btn active" onclick="setFontSize('normal')">Normal</button>
-      <button class="font-btn" onclick="setFontSize('large')">Besar</button>
+      <button class="font-btn" onclick="setFontSize('small',this)">Kecil</button>
+      <button class="font-btn active" onclick="setFontSize('normal',this)">Normal</button>
+      <button class="font-btn" onclick="setFontSize('large',this)">Besar</button>
     </div>
   </div>
 
@@ -1566,8 +1583,6 @@
 
 <div class="divider"></div>
 
-<div class="divider"></div>
-
 <!-- TESTIMONI SECTION -->
 <section id="sec-testimoni" class="reveal">
   <p class="section-label" style="display:flex;align-items:center;gap:6px;">
@@ -1854,11 +1869,11 @@
     })();
     style.textContent = this.checked ? '' : 'body::before { opacity: 0 !important; }';
   });
-  function setFontSize(size) {
+  function setFontSize(size, btn) {
     const map = { small: '13px', normal: '16px', large: '19px' };
     document.documentElement.style.fontSize = map[size];
     document.querySelectorAll('.font-btn').forEach(b => b.classList.remove('active'));
-    event.target.classList.add('active');
+    if (btn) btn.classList.add('active');
   }
   function setAccent(el) {
     document.querySelectorAll('.swatch').forEach(s => s.classList.remove('active'));
